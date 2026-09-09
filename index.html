@@ -3,20 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>¡A celebrar!</title>
+<meta name="robots" content="noindex,nofollow">
+<title>MIRYAM · twenty five</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;background:linear-gradient(135deg,#ff6b6b,#feca57,#48dbfb,#ff9ff3);background-size:400% 400%;animation:bg 12s ease infinite;color:#fff;text-align:center}
-  @keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  .box{background:rgba(0,0,0,.25);padding:2.5rem;border-radius:24px;max-width:520px;margin:1rem}
-  h1{font-size:2.4rem;margin:0 0 .5rem}
-  p{font-size:1.15rem;opacity:.95}
+  :root{--ink:#111;--mute:#555;--line:#ddd}
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif}
+  .wrap{max-width:720px;margin:0 auto;padding:3rem 1.4rem 5rem}
+  .lock{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+  .lock p{color:var(--mute)}
+  header{text-align:center;padding-bottom:2.2rem}
+  .name{font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.28em;font-weight:400;margin:0}
+  .script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3.2rem);margin:.35rem 0}
+  .caps{letter-spacing:.22em;font-size:clamp(1.4rem,5vw,2rem);margin:.2rem 0 1rem}
+  .rule{width:48px;height:1px;background:#111;margin:1rem auto}
+  .date{letter-spacing:.28em;font-size:1.05rem}
+  .intro{text-align:center;line-height:1.6;font-size:1.2rem;color:#333;margin:0 auto 2rem;max-width:38rem}
+  nav{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0 2rem}
+  nav button{background:#fff;border:1px solid #111;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:.65rem 1rem;cursor:pointer}
+  nav button.on{background:#111;color:#fff}
+  section{display:none}
+  section.on{display:block}
+  h2{font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:.95rem;text-align:center}
+  .card{border:1px solid var(--line);padding:1.3rem;margin:1rem 0}
+  label{display:block;font-size:.95rem;margin:.7rem 0 .25rem}
+  input,textarea,select{width:100%;font:inherit;font-size:1.05rem;padding:.55rem .6rem;border:1px solid #ccc}
+  textarea{min-height:120px;resize:vertical}
+  .btn{display:inline-block;margin-top:1rem;background:#111;color:#fff;border:0;padding:.7rem 1.2rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;text-decoration:none}
+  .note{font-size:.98rem;color:var(--mute);line-height:1.5}
+  footer{text-align:center;margin-top:3rem;color:#999;font-size:.9rem}
 </style>
 </head>
 <body>
-<div class="box">
-  <h1>🎉 ¡A celebrar!</h1>
-  <p>Edita este archivo en GitHub para poner fotos, mensajes y lo que quieras.</p>
-  <p>Repo: github.com/eurusevanora-dot/celebra</p>
+<div id="lock" class="lock">
+  <div>
+    <p class="name" style="letter-spacing:.2em;font-size:1.6rem">MIRYAM</p>
+    <p>Esta celebración es solo para quien tiene la invitación.</p>
+  </div>
 </div>
+
+<div id="app" hidden>
+  <div class="wrap">
+    <header>
+      <p class="name">MIRYAM</p>
+      <p class="script">twenty five</p>
+      <p class="script">¡Hay mucho que</p>
+      <p class="caps">CELEBRAR!</p>
+      <div class="rule"></div>
+      <p class="date">19 · 09 · 2026</p>
+    </header>
+
+    <p class="intro">
+      Este es un rincón íntimo para Gloria, Miryam y Joaquín,
+      y para toda la familia y los amigos. Quien llega con la invitación
+      puede dejar fotos, dedicatorias y lo que quiera compartir.
+    </p>
+
+    <nav>
+      <button class="on" data-tab="fotos">Fotos</button>
+      <button data-tab="mensajes">Mensajes</button>
+      <button data-tab="libre">Espacio libre</button>
+    </nav>
+
+    <section id="fotos" class="on">
+      <h2>Fotos</h2>
+      <p class="note">Sube recuerdos de Gloria, Miryam, Joaquín, la familia y los amigos.</p>
+      <div class="card">
+        <a class="btn" href="https://drive.google.com/drive/folders/1brkmxUEbpJihAlTon8BT7X8rnGjBofas" target="_blank" rel="noopener">Abrir álbum de fotos</a>
+        <p class="note" style="margin-top:1rem">En Drive: Nuevo → Subir archivos. El álbum lo ves solo si tienes este enlace.</p>
+      </div>
+    </section>
+
+    <section id="mensajes">
+      <h2>Mensajes y dedicatorias</h2>
+      <p class="note">Escribe a Gloria, Miryam, Joaquín o a toda la familia.</p>
+      <form class="card" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Dedicatoria · Miryam 25">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="box">
+        <label>Tu nombre</label>
+        <input name="nombre" required>
+        <label>Para</label>
+        <select name="para">
+          <option>Miryam</option>
+          <option>Gloria</option>
+          <option>Joaquín</option>
+          <option>Toda la familia</option>
+        </select>
+        <label>Dedicatoria</label>
+        <textarea name="mensaje" required></textarea>
+        <button class="btn" type="submit">Enviar mensaje</button>
+      </form>
+    </section>
+
+    <section id="libre">
+      <h2>Espacio libre</h2>
+      <p class="note">Anécdotas, canciones, recetas, planes, lo que se te ocurra.</p>
+      <form class="card" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Espacio libre · Miryam 25">
+        <input type="hidden" name="_captcha" value="false">
+        <label>Tu nombre</label>
+        <input name="nombre" required>
+        <label>Qué quieres dejar</label>
+        <textarea name="contenido" required></textarea>
+        <button class="btn" type="submit">Publicar</button>
+      </form>
+      <div class="card">
+        <p class="note">También puedes dejar archivos sueltos aquí:</p>
+        <a class="btn" href="https://drive.google.com/drive/folders/1aXnVMJRii1HZhhiau_fGSF1DllqwaxLq" target="_blank" rel="noopener">Espacio libre en Drive</a>
+      </div>
+    </section>
+
+    <footer>Solo se entra con el QR de la invitación · 19 · 09 · 2026</footer>
+  </div>
+</div>
+
+<script>
+const KEY = "C3AQ-QeQrRg9UtDM";
+function ok() {
+  const h = (location.hash || "").replace(/^#/, "");
+  const p = new URLSearchParams(h.includes("=") ? h : "k=" + h);
+  const k = p.get("k") || (h.startsWith("k=") ? h.slice(2) : h);
+  return k === KEY || h === "k=" + KEY;
+}
+ if (ok()) {
+  document.getElementById("lock").hidden = true;
+  document.getElementById("app").hidden = false;
+}
+document.querySelectorAll("nav button").forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll("nav button").forEach(x => x.classList.remove("on"));
+    document.querySelectorAll("section").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    document.getElementById(b.dataset.tab).classList.add("on");
+  };
+});
+</script>
 </body>
 </html>

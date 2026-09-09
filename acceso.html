@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
 <title>MIRYAM · twenty five</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
@@ -12,24 +11,24 @@
   body{margin:0;background:#fff;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif}
   .wrap{max-width:720px;margin:0 auto;padding:3rem 1.4rem 5rem}
   header{text-align:center;padding-bottom:2.2rem}
-  .name{font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.28em;font-weight:400;margin:0}
+  .name{font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.28em;margin:0}
   .script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3.2rem);margin:.35rem 0}
-  .caps{letter-spacing:.22em;font-size:clamp(1.4rem,5vw,2rem);margin:.2rem 0 1rem}
+  .caps{letter-spacing:.22em;font-size:clamp(1.4rem,5vw,2rem)}
   .rule{width:48px;height:1px;background:#111;margin:1rem auto}
-  .date{letter-spacing:.28em;font-size:1.05rem}
-  .intro{text-align:center;line-height:1.6;font-size:1.2rem;color:#333;margin:0 auto 2rem;max-width:38rem}
+  .date{letter-spacing:.28em}
+  .intro{text-align:center;line-height:1.6;font-size:1.2rem;margin:0 auto 2rem;max-width:38rem}
   nav{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0 2rem}
   nav button{background:#fff;border:1px solid #111;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:.65rem 1rem;cursor:pointer}
   nav button.on{background:#111;color:#fff}
   section{display:none}section.on{display:block}
   h2{font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:.95rem;text-align:center}
   .card{border:1px solid var(--line);padding:1.3rem;margin:1rem 0}
-  label{display:block;font-size:.95rem;margin:.7rem 0 .25rem}
-  input,textarea,select{width:100%;font:inherit;font-size:1.05rem;padding:.55rem .6rem;border:1px solid #ccc}
-  textarea{min-height:110px;resize:vertical}
+  label{display:block;margin:.7rem 0 .25rem}
+  input,textarea,select{width:100%;font:inherit;padding:.55rem .6rem;border:1px solid #ccc}
+  textarea{min-height:110px}
   .btn{display:inline-block;margin-top:1rem;background:#111;color:#fff;border:0;padding:.7rem 1.2rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;text-decoration:none}
-  .note,.priv{font-size:.95rem;color:var(--mute);line-height:1.5}
-  footer{text-align:center;margin-top:3rem;color:#999;font-size:.9rem}
+  .note{color:#555;line-height:1.5}
+  footer{text-align:center;margin-top:3rem;color:#999}
 </style>
 </head>
 <body>
@@ -42,22 +41,22 @@
   <div class="rule"></div>
   <p class="date">19 · 09 · 2026</p>
 </header>
-<p class="intro">Rincón para Gloria, Miryam y Joaquín, familia y amigos. El mail o teléfono no se publica. Nada sale al muro hasta que se aprueba.</p>
+<p class="intro">Gloria, Miryam y Joaquín, familia y amigos. El contacto no se publica. El muro solo muestra lo aprobado.</p>
 <nav>
   <button class="on" data-tab="muro">Muro</button>
   <button data-tab="subir">Subir</button>
 </nav>
 <section id="muro" class="on">
   <h2>Muro</h2>
-  <div id="feed" class="note">Aún no hay recuerdos publicados.</div>
+  <div class="note">Aún no hay recuerdos publicados.</div>
 </section>
 <section id="subir">
   <h2>Dejar algo</h2>
   <div class="card">
-    <p class="note">Fotos y vídeos: súbelos aquí (rápido). En Drive: Nuevo → Subir archivos.</p>
+    <p class="note">Foto o vídeo: álbum Drive → carpeta Fotos → Nuevo → Subir.</p>
     <a class="btn" href="https://drive.google.com/drive/folders/1brkmxUEbpJihAlTon8BT7X8rnGjBofas" target="_blank" rel="noopener">Abrir álbum</a>
   </div>
-  <form class="card" id="f" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST">
+  <form class="card" id="f" action="https://formsubmit.co/siciliatoledo@gmail.com" method="POST">
     <input type="hidden" name="_subject" value="PENDIENTE · Miryam 25">
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_next" value="https://eurusevanora-dot.github.io/celebra/acceso.html">
@@ -66,12 +65,11 @@
     <label>Email o teléfono (privado)</label>
     <input name="contacto" required>
     <label>Tipo</label>
-    <select name="tipo"><option>Mensaje</option><option>Felicitación</option><option>Foto (ya subida a Drive)</option><option>Vídeo (ya subido a Drive)</option><option>Espacio libre</option></select>
+    <select name="tipo"><option>Mensaje</option><option>Felicitación</option><option>Foto (en Drive)</option><option>Vídeo (en Drive)</option></select>
     <label>Para</label>
     <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
     <label>Texto</label>
     <textarea name="mensaje" required></textarea>
-    <p class="priv">Solo texto. Así el envío es inmediato.</p>
     <button class="btn" type="submit">Enviar mensaje</button>
   </form>
 </section>
@@ -79,16 +77,11 @@
 </div>
 <script>
 document.querySelectorAll("nav button").forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
-    document.querySelectorAll("section").forEach(x=>x.classList.remove("on"));
-    b.classList.add("on");
-    document.getElementById(b.dataset.tab).classList.add("on");
-  };
+  b.onclick=()=>{document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.getElementById(b.dataset.tab).classList.add("on");};
 });
 document.getElementById("f").addEventListener("submit",e=>{
   const c=(document.querySelector("[name=contacto]").value||"").trim();
-  if(!/@/.test(c) && !/[0-9]{6,}/.test(c.replace(/\s/g,""))){e.preventDefault();alert("Pon un email o un teléfono.");}
+  if(!/@/.test(c)&&!/[0-9]{6,}/.test(c.replace(/\s/g,""))){e.preventDefault();alert("Pon un email o un teléfono.");}
 });
 </script>
 </body>

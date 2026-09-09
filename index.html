@@ -3,148 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
 <title>MIRYAM · twenty five</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#111;--mute:#555;--line:#ddd}
-  *{box-sizing:border-box}
-  body{margin:0;background:#fff;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif}
-  .wrap{max-width:720px;margin:0 auto;padding:3rem 1.4rem 5rem}
-  .lock{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
-  .lock p{color:var(--mute)}
-  header{text-align:center;padding-bottom:2.2rem}
-  .name{font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.28em;font-weight:400;margin:0}
-  .script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3.2rem);margin:.35rem 0}
-  .caps{letter-spacing:.22em;font-size:clamp(1.4rem,5vw,2rem);margin:.2rem 0 1rem}
-  .rule{width:48px;height:1px;background:#111;margin:1rem auto}
-  .date{letter-spacing:.28em;font-size:1.05rem}
-  .intro{text-align:center;line-height:1.6;font-size:1.2rem;color:#333;margin:0 auto 2rem;max-width:38rem}
-  nav{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0 2rem}
-  nav button{background:#fff;border:1px solid #111;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:.65rem 1rem;cursor:pointer}
-  nav button.on{background:#111;color:#fff}
-  section{display:none}
-  section.on{display:block}
-  h2{font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:.95rem;text-align:center}
-  .card{border:1px solid var(--line);padding:1.3rem;margin:1rem 0}
-  label{display:block;font-size:.95rem;margin:.7rem 0 .25rem}
-  input,textarea,select{width:100%;font:inherit;font-size:1.05rem;padding:.55rem .6rem;border:1px solid #ccc}
-  textarea{min-height:110px;resize:vertical}
-  .btn{display:inline-block;margin-top:1rem;background:#111;color:#fff;border:0;padding:.7rem 1.2rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;text-decoration:none}
-  .note{font-size:.98rem;color:var(--mute);line-height:1.5}
-  .priv{font-size:.9rem;color:#777}
-  .post{border-bottom:1px solid var(--line);padding:1rem 0}
-  .post .who{letter-spacing:.08em;text-transform:uppercase;font-size:.78rem}
-  .post .txt{font-size:1.15rem;margin:.35rem 0}
-  .post img,.post video{max-width:100%;margin-top:.6rem}
-  footer{text-align:center;margin-top:3rem;color:#999;font-size:.9rem}
+body{margin:0;background:#fff;color:#111;font-family:"Cormorant Garamond",Georgia,serif;text-align:center}
+.wrap{max-width:640px;margin:0 auto;padding:3rem 1.3rem 4rem}
+.name{font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.28em;margin:0}
+.script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3rem);margin:.3rem 0}
+.caps{letter-spacing:.2em;font-size:clamp(1.3rem,5vw,1.9rem)}
+.rule{width:48px;height:1px;background:#111;margin:1rem auto}
+.date{letter-spacing:.28em;margin-bottom:1.6rem}
+.intro{line-height:1.55;font-size:1.15rem;margin:0 auto 2rem}
+.btn{display:block;margin:.7rem auto;max-width:22rem;padding:.9rem 1rem;background:#111;color:#fff;text-decoration:none;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
+.ghost{background:#fff;color:#111;border:1px solid #111}
+.note{color:#666;font-size:1rem;margin-top:1.5rem}
 </style>
 </head>
 <body>
-<div id="lock" class="lock">
-  <div>
-    <p class="name" style="letter-spacing:.2em;font-size:1.6rem">MIRYAM</p>
-    <p>Esta celebración es solo para quien tiene la invitación.</p>
-  </div>
+<div class="wrap">
+  <p class="name">MIRYAM</p>
+  <p class="script">twenty five</p>
+  <p class="script">¡Hay mucho que</p>
+  <p class="caps">CELEBRAR!</p>
+  <div class="rule"></div>
+  <p class="date">19 · 09 · 2026</p>
+  <p class="intro">Para Gloria, Miryam, Joaquín, familia y amigos.</p>
+  <a class="btn" href="https://drive.google.com/drive/folders/1HptR9F7_g05jhnbWCubWZQOpluWf6ysH" target="_blank" rel="noopener">Ver muro</a>
+  <a class="btn ghost" href="https://drive.google.com/drive/folders/1brkmxUEbpJihAlTon8BT7X8rnGjBofas" target="_blank" rel="noopener">Subir foto o vídeo</a>
+  <a class="btn ghost" href="https://t.me/Nexusmetadatabot" target="_blank" rel="noopener">Enviar mensaje</a>
+  <p class="note">Escribe tu nombre en el mensaje o en el archivo. El contacto solo lo ve Pepe.</p>
 </div>
-<div id="app" hidden>
-  <div class="wrap">
-    <header>
-      <p class="name">MIRYAM</p>
-      <p class="script">twenty five</p>
-      <p class="script">¡Hay mucho que</p>
-      <p class="caps">CELEBRAR!</p>
-      <div class="rule"></div>
-      <p class="date">19 · 09 · 2026</p>
-    </header>
-    <p class="intro">
-      Este es un rincón íntimo para Gloria, Miryam y Joaquín,
-      y para toda la familia y los amigos. Lo que subas (foto, vídeo, felicitación o mensaje)
-      pide nombre y un mail o teléfono. Eso solo lo ve quien organiza.
-      Nada sale al muro hasta que se aprueba.
-    </p>
-    <nav>
-      <button class="on" data-tab="muro">Muro</button>
-      <button data-tab="subir">Subir</button>
-    </nav>
-    <section id="muro" class="on">
-      <h2>Muro</h2>
-      <div id="feed" class="note">Aún no hay recuerdos publicados.</div>
-    </section>
-    <section id="subir">
-      <h2>Dejar algo</h2>
-      <form class="card" id="f" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_subject" value="PENDIENTE · Miryam 25">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="box">
-        <label>Tu nombre (se verá en el muro si se aprueba)</label>
-        <input name="nombre" required>
-        <label>Email o teléfono (privado, no se publica)</label>
-        <input name="contacto" required placeholder="mail o teléfono">
-        <label>Tipo</label>
-        <select name="tipo">
-          <option>Foto</option>
-          <option>Vídeo</option>
-          <option>Mensaje</option>
-          <option>Felicitación</option>
-          <option>Espacio libre</option>
-        </select>
-        <label>Para</label>
-        <select name="para">
-          <option>Miryam</option>
-          <option>Gloria</option>
-          <option>Joaquín</option>
-          <option>Toda la familia</option>
-        </select>
-        <label>Texto</label>
-        <textarea name="mensaje"></textarea>
-        <label>Foto o vídeo</label>
-        <input type="file" name="archivo" accept="image/*,video/*">
-        <p class="priv">El contacto no aparece en el muro. Queda pendiente hasta el sí o no.</p>
-        <button class="btn" type="submit">Enviar a revisión</button>
-      </form>
-    </section>
-    <footer>Solo se entra con el QR · 19 · 09 · 2026</footer>
-  </div>
-</div>
-<script>
-const KEY = "C3AQ-QeQrRg9UtDM";
-function ok() {
-  const h = (location.hash || "").replace(/^#/, "");
-  const p = new URLSearchParams(h.includes("=") ? h : "k=" + h);
-  const k = p.get("k") || (h.startsWith("k=") ? h.slice(2) : h);
-  return k === KEY || h === "k=" + KEY;
-}
-if (ok()) {
-  document.getElementById("lock").hidden = true;
-  document.getElementById("app").hidden = false;
-}
-document.querySelectorAll("nav button").forEach(b => {
-  b.onclick = () => {
-    document.querySelectorAll("nav button").forEach(x => x.classList.remove("on"));
-    document.querySelectorAll("section").forEach(x => x.classList.remove("on"));
-    b.classList.add("on");
-    document.getElementById(b.dataset.tab).classList.add("on");
-  };
-});
-fetch("muro.json").then(r => r.ok ? r.json() : []).then(items => {
-  if (!items || !items.length) return;
-  const feed = document.getElementById("feed");
-  feed.innerHTML = items.map(p => {
-    const media = p.imagen ? `<img src="${p.imagen}" alt="">` : (p.video ? `<video src="${p.video}" controls></video>` : "");
-    return `<article class="post"><div class="who">${p.nombre || ""} · ${p.tipo || ""} · ${p.para || ""}</div><div class="txt">${(p.texto||"").replace(/</g,"")}</div>${media}</article>`;
-  }).join("");
-}).catch(()=>{});
-document.getElementById("f").addEventListener("submit", e => {
-  const c = (document.querySelector("[name=contacto]").value || "").trim();
-  const mail = /@/.test(c);
-  const tel = /[0-9]{6,}/.test(c.replace(/\s/g,""));
-  if (!mail && !tel) {
-    e.preventDefault();
-    alert("Pon un email o un teléfono.");
-  }
-});
-</script>
 </body>
 </html>

@@ -9,13 +9,13 @@
 *{box-sizing:border-box}
 body{margin:0;background:#faf8f4;color:#111;font-family:"Cormorant Garamond",Georgia,serif}
 .wrap{max-width:980px;margin:0 auto;padding:2.4rem 1.2rem 4rem}
-header{text-align:center;padding-bottom:1.2rem}
+header{text-align:center}
 .name{font-size:clamp(2.2rem,7vw,3.6rem);letter-spacing:.28em;margin:0}
 .script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3rem);margin:.25rem 0}
 .caps{letter-spacing:.2em;font-size:clamp(1.2rem,4vw,1.8rem)}
 .rule{width:48px;height:1px;background:#111;margin:1rem auto}
-.date{letter-spacing:.28em;margin-bottom:1rem}
-.intro{max-width:36rem;margin:0 auto 1.4rem;line-height:1.5;font-size:1.15rem;text-align:center}
+.date{letter-spacing:.28em}
+.intro{max-width:36rem;margin:1rem auto 1.4rem;line-height:1.5;font-size:1.15rem;text-align:center}
 nav{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 1.6rem}
 nav button{background:#fff;border:1px solid #111;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:.65rem 1rem;cursor:pointer}
 nav button.on{background:#111;color:#fff}
@@ -27,8 +27,8 @@ section{display:none}section.on{display:block}
 label{display:block;margin:.7rem 0 .25rem}
 input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #ccc}
 textarea{min-height:110px}
-.btn{margin-top:.7rem;background:#111;color:#fff;border:0;padding:.75rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%;display:block;text-align:center;text-decoration:none}
-.hint,.ok,.err{text-align:center;margin-top:.8rem;color:#555}
+.btn{margin-top:1rem;background:#111;color:#fff;border:0;padding:.8rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
+.hint{text-align:center;color:#555;margin-top:.8rem}
 .empty{text-align:center;color:#666}
 </style>
 </head>
@@ -42,7 +42,7 @@ textarea{min-height:110px}
   <div class="rule"></div>
   <p class="date">19 · 09 · 2026</p>
 </header>
-<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Lo que dejes se revisa antes de salir al muro.</p>
+<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Felicitación, foto o vídeo: se envía y Pepe lo publica en el muro.</p>
 <nav>
   <button class="on" data-tab="muro">Muro</button>
   <button data-tab="fotos">Fotos</button>
@@ -58,44 +58,21 @@ textarea{min-height:110px}
 <section id="libre"><div class="form" data-tipo="Espacio libre"></div></section>
 </div>
 <script>
-const WA = "https://wa.me/34646436481";
-const FORM = `
-  <label>Tu nombre</label><input name="nombre" required>
-  <label>Email o teléfono (no se publica)</label><input name="contacto" required>
-  <label>Para</label>
-  <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
-  <label>Texto</label><textarea name="mensaje"></textarea>
-  <label>Foto o vídeo (opcional)</label><input type="file" name="archivo" accept="image/*,video/*">
-  <button class="btn" type="submit">Enviar aquí</button>
-  <a class="btn wa" href="#">Enviar por WhatsApp</a>
-  <p class="hint">Por WhatsApp puedes adjuntar la foto o el vídeo en el chat.</p>
-  <p class="ok" hidden>Recibido. Queda en revisión.</p>
-  <p class="err" hidden></p>`;
+const WA = "34646436481";
 document.querySelectorAll(".form").forEach(box => {
-  const f = document.createElement("form");
-  f.innerHTML = FORM;
-  box.appendChild(f);
-  const wa = f.querySelector(".wa");
-  wa.addEventListener("click", () => {
-    const n = (f.nombre.value || "").trim();
-    const t = (f.mensaje.value || "").trim();
-    const txt = encodeURIComponent("Felicidades Myrian — " + box.dataset.tipo + " para " + f.para.value + (n ? " · " + n : "") + (t ? "\n" + t : "") + "\n(Adjunto foto o vídeo si hay)");
-    wa.href = WA + "?text=" + txt;
-  });
-  f.addEventListener("submit", async e => {
+  box.innerHTML = `<form>
+    <label>Tu nombre</label><input name="nombre" required>
+    <label>Para</label>
+    <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
+    <label>Texto</label><textarea name="mensaje" required></textarea>
+    <button class="btn" type="submit">Enviar felicitación</button>
+    <p class="hint">Se abre WhatsApp con el texto. Ahí adjunta la foto o el vídeo.</p>
+  </form>`;
+  box.querySelector("form").addEventListener("submit", e => {
     e.preventDefault();
-    const c = (f.contacto.value || "").trim();
-    const okm = f.querySelector(".ok"); const er = f.querySelector(".err");
-    okm.hidden = true; er.hidden = true;
-    if (!/@/.test(c) && !/[0-9]{6,}/.test(c.replace(/\s/g,""))) { er.hidden = false; er.textContent = "Pon un email o un teléfono."; return; }
-    const fd = new FormData(f);
-    fd.append("_subject", "PENDIENTE · Miryam 25 · " + box.dataset.tipo);
-    fd.append("tipo", box.dataset.tipo);
-    try {
-      const r = await fetch("https://formsubmit.co/ajax/siciliatoledo@gmail.com", {method:"POST", body:fd, headers:{Accept:"application/json"}});
-      if (!r.ok) throw new Error();
-      okm.hidden = false; f.reset();
-    } catch { er.hidden = false; er.textContent = "No se pudo enviar aquí. Usa WhatsApp."; }
+    const f = e.target;
+    const txt = encodeURIComponent("Felicidades Myrian\n" + box.dataset.tipo + " para " + f.para.value + "\nDe: " + f.nombre.value.trim() + "\n" + f.mensaje.value.trim() + "\n(Adjunta foto o vídeo aquí si quieres)");
+    location.href = "https://wa.me/" + WA + "?text=" + txt;
   });
 });
 document.querySelectorAll("nav button").forEach(b => {
@@ -106,7 +83,8 @@ document.querySelectorAll("nav button").forEach(b => {
   };
 });
 fetch("muro.json").then(r => r.ok ? r.json() : []).then(items => {
-  const feed = document.getElementById("feed"); const empty = document.getElementById("empty");
+  const feed = document.getElementById("feed");
+  const empty = document.getElementById("empty");
   if (!items || !items.length) return;
   empty.hidden = true;
   feed.innerHTML = items.map(p => {

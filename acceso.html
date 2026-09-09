@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>MIRYAM · twenty five</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111;--mute:#555;--line:#ddd}
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif}
+  .wrap{max-width:720px;margin:0 auto;padding:3rem 1.4rem 5rem}
+  header{text-align:center;padding-bottom:2.2rem}
+  .name{font-size:clamp(2.4rem,8vw,4rem);letter-spacing:.28em;font-weight:400;margin:0}
+  .script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3.2rem);margin:.35rem 0}
+  .caps{letter-spacing:.22em;font-size:clamp(1.4rem,5vw,2rem);margin:.2rem 0 1rem}
+  .rule{width:48px;height:1px;background:#111;margin:1rem auto}
+  .date{letter-spacing:.28em;font-size:1.05rem}
+  .intro{text-align:center;line-height:1.6;font-size:1.2rem;color:#333;margin:0 auto 2rem;max-width:38rem}
+  nav{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0 2rem}
+  nav button{background:#fff;border:1px solid #111;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:.65rem 1rem;cursor:pointer}
+  nav button.on{background:#111;color:#fff}
+  section{display:none}section.on{display:block}
+  h2{font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:.95rem;text-align:center}
+  .card{border:1px solid var(--line);padding:1.3rem;margin:1rem 0}
+  label{display:block;font-size:.95rem;margin:.7rem 0 .25rem}
+  input,textarea,select{width:100%;font:inherit;font-size:1.05rem;padding:.55rem .6rem;border:1px solid #ccc}
+  textarea{min-height:110px;resize:vertical}
+  .btn{display:inline-block;margin-top:1rem;background:#111;color:#fff;border:0;padding:.7rem 1.2rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;text-decoration:none}
+  .note,.priv{font-size:.95rem;color:var(--mute);line-height:1.5}
+  footer{text-align:center;margin-top:3rem;color:#999;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="name">MIRYAM</p>
+  <p class="script">twenty five</p>
+  <p class="script">¡Hay mucho que</p>
+  <p class="caps">CELEBRAR!</p>
+  <div class="rule"></div>
+  <p class="date">19 · 09 · 2026</p>
+</header>
+<p class="intro">Rincón para Gloria, Miryam y Joaquín, familia y amigos. El mail o teléfono no se publica. Nada sale al muro hasta que se aprueba.</p>
+<nav>
+  <button class="on" data-tab="muro">Muro</button>
+  <button data-tab="subir">Subir</button>
+</nav>
+<section id="muro" class="on">
+  <h2>Muro</h2>
+  <div id="feed" class="note">Aún no hay recuerdos publicados.</div>
+</section>
+<section id="subir">
+  <h2>Dejar algo</h2>
+  <form class="card" id="f" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="PENDIENTE · Miryam 25">
+    <input type="hidden" name="_captcha" value="false">
+    <label>Tu nombre</label>
+    <input name="nombre" required>
+    <label>Email o teléfono (privado)</label>
+    <input name="contacto" required>
+    <label>Tipo</label>
+    <select name="tipo"><option>Foto</option><option>Vídeo</option><option>Mensaje</option><option>Felicitación</option><option>Espacio libre</option></select>
+    <label>Para</label>
+    <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
+    <label>Texto</label>
+    <textarea name="mensaje"></textarea>
+    <label>Foto o vídeo</label>
+    <input type="file" name="archivo" accept="image/*,video/*">
+    <button class="btn" type="submit">Enviar a revisión</button>
+  </form>
+</section>
+<footer>19 · 09 · 2026</footer>
+</div>
+<script>
+document.querySelectorAll("nav button").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+    document.querySelectorAll("section").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    document.getElementById(b.dataset.tab).classList.add("on");
+  };
+});
+document.getElementById("f").addEventListener("submit",e=>{
+  const c=(document.querySelector("[name=contacto]").value||"").trim();
+  if(!/@/.test(c) && !/[0-9]{6,}/.test(c.replace(/\s/g,""))){e.preventDefault();alert("Pon un email o un teléfono.");}
+});
+</script>
+</body>
+</html>

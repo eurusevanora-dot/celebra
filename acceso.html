@@ -53,22 +53,26 @@
 </section>
 <section id="subir">
   <h2>Dejar algo</h2>
-  <form class="card" id="f" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST" enctype="multipart/form-data">
+  <div class="card">
+    <p class="note">Fotos y vídeos: súbelos aquí (rápido). En Drive: Nuevo → Subir archivos.</p>
+    <a class="btn" href="https://drive.google.com/drive/folders/1brkmxUEbpJihAlTon8BT7X8rnGjBofas" target="_blank" rel="noopener">Abrir álbum</a>
+  </div>
+  <form class="card" id="f" action="https://formsubmit.co/eurusevanora@gmail.com" method="POST">
     <input type="hidden" name="_subject" value="PENDIENTE · Miryam 25">
     <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://eurusevanora-dot.github.io/celebra/acceso.html">
     <label>Tu nombre</label>
     <input name="nombre" required>
     <label>Email o teléfono (privado)</label>
     <input name="contacto" required>
     <label>Tipo</label>
-    <select name="tipo"><option>Foto</option><option>Vídeo</option><option>Mensaje</option><option>Felicitación</option><option>Espacio libre</option></select>
+    <select name="tipo"><option>Mensaje</option><option>Felicitación</option><option>Foto (ya subida a Drive)</option><option>Vídeo (ya subido a Drive)</option><option>Espacio libre</option></select>
     <label>Para</label>
     <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
     <label>Texto</label>
-    <textarea name="mensaje"></textarea>
-    <label>Foto o vídeo</label>
-    <input type="file" name="archivo" accept="image/*,video/*">
-    <button class="btn" type="submit">Enviar a revisión</button>
+    <textarea name="mensaje" required></textarea>
+    <p class="priv">Solo texto. Así el envío es inmediato.</p>
+    <button class="btn" type="submit">Enviar mensaje</button>
   </form>
 </section>
 <footer>19 · 09 · 2026</footer>

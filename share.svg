@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f1e6"/>
+  <rect x="36" y="36" width="1128" height="558" fill="none" stroke="#c4a574" stroke-width="2"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#e8d7b0" stroke-width="1"/>
+  <text x="600" y="250" text-anchor="middle" font-family="Georgia, serif" font-size="92" letter-spacing="18" fill="#111">MIRYAM</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="48" font-style="italic" fill="#8a6a3b">twenty five</text>
+  <line x1="540" y1="370" x2="660" y2="370" stroke="#c4a574" stroke-width="2"/>
+  <text x="600" y="430" text-anchor="middle" font-family="Georgia, serif" font-size="34" letter-spacing="8" fill="#333">19 · 09 · 2026</text>
+  <text x="600" y="500" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#6b5a3e">Hay mucho que celebrar</text>
+</svg>

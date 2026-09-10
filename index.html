@@ -10,33 +10,48 @@
 <meta property="og:url" content="https://eurusevanora-dot.github.io/celebra/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
+:root{--ink:#2a2118;--paper:#f3ead8;--card:#fffdf8;--gold:#b0893e;--rose:#c46a6a}
 *{box-sizing:border-box}
-body{margin:0;background:#faf8f4;color:#111;font-family:"Cormorant Garamond",Georgia,serif}
-.wrap{max-width:980px;margin:0 auto;padding:2.4rem 1.2rem 4rem}
-header{text-align:center}
-.name{font-size:clamp(2.2rem,7vw,3.6rem);letter-spacing:.28em;margin:0}
-.script{font-family:"Great Vibes",cursive;font-size:clamp(2rem,7vw,3rem);margin:.25rem 0}
-.caps{letter-spacing:.2em;font-size:clamp(1.2rem,4vw,1.8rem)}
-.rule{width:48px;height:1px;background:#111;margin:1rem auto}
-.date{letter-spacing:.28em}
-.intro{max-width:36rem;margin:1rem auto 1.4rem;line-height:1.5;font-size:1.15rem;text-align:center}
-nav{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0 1.6rem}
-nav button{background:#fff;border:1px solid #111;font-family:inherit;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:.65rem 1rem;cursor:pointer}
-nav button.on{background:#111;color:#fff}
+body{margin:0;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;background:
+  radial-gradient(ellipse at 20% 0%,#fff6e8,transparent 50%),
+  radial-gradient(ellipse at 90% 20%,#f0d9c8,transparent 45%),
+  #efe4d0}
+.wrap{max-width:1120px;margin:0 auto;padding:2.2rem 1rem 5rem}
+header{text-align:center;padding:1rem 0 0.4rem}
+.name{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.32em;margin:0}
+.script{font-family:"Great Vibes",cursive;font-size:clamp(2.2rem,8vw,3.6rem);margin:.15rem 0;color:#5a3d2b}
+.caps{letter-spacing:.22em;font-size:clamp(1.1rem,3.6vw,1.7rem)}
+.rule{width:42px;height:1px;background:var(--gold);margin:1rem auto}
+.date{letter-spacing:.3em;font-size:.95rem}
+.intro{max-width:34rem;margin:.8rem auto 1.2rem;line-height:1.55;font-size:1.18rem;text-align:center}
+nav{display:flex;gap:.45rem;justify-content:center;flex-wrap:wrap;margin:0 0 1.4rem}
+nav button{background:transparent;border:1px solid #2a211855;font-family:inherit;letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;padding:.6rem .95rem;cursor:pointer}
+nav button.on{background:var(--ink);color:#f7efe2;border-color:var(--ink)}
 section{display:none}section.on{display:block}
-.grid{columns:3 16rem;column-gap:1rem}
-.card{break-inside:avoid;background:#fff;margin:0 0 1rem;padding:.6rem;box-shadow:0 2px 14px #00000012}
-.card img,.card video{width:100%;display:block}
-.form{max-width:28rem;margin:0 auto;background:#fff;padding:1.2rem;box-shadow:0 2px 14px #00000012}
-label{display:block;margin:.7rem 0 .25rem}
-input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #ccc}
+.wall{columns:3 17rem;column-gap:1.15rem}
+.card{break-inside:avoid;background:var(--card);margin:0 0 1.15rem;padding:.7rem .7rem .85rem;box-shadow:0 10px 24px #00000018,0 1px 0 #fff inset;position:relative}
+.card:nth-child(3n){transform:rotate(-1.2deg)}
+.card:nth-child(3n+1){transform:rotate(.8deg)}
+.card:nth-child(3n+2){transform:rotate(-.4deg)}
+.card.note{background:#fff4d6;padding:1.1rem 1rem 1rem}
+.card img,.card video{width:100%;display:block;background:#eee}
+.tape{position:absolute;top:-9px;left:50%;width:54px;height:16px;margin-left:-27px;background:#f7e7a388;transform:rotate(-2deg)}
+.msg{font-size:1.22rem;line-height:1.45;margin:.75rem .15rem .2rem;white-space:pre-wrap}
+.meta{display:flex;justify-content:space-between;gap:.6rem;align-items:baseline;margin:.7rem .15rem 0;flex-wrap:wrap}
+.para{font-family:"Great Vibes",cursive;font-size:1.55rem;color:var(--rose)}
+.de{font-size:.95rem;letter-spacing:.06em}
+.form{max-width:30rem;margin:0 auto 1.6rem;background:var(--card);padding:1.25rem 1.2rem 1.35rem;box-shadow:0 10px 28px #00000014}
+.form h2{font-family:"Great Vibes",cursive;font-weight:400;font-size:2rem;margin:0 0 .4rem;text-align:center}
+label{display:block;margin:.7rem 0 .25rem;letter-spacing:.08em;font-size:.95rem}
+input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #cbbda8;background:#fffdf8}
 textarea{min-height:110px}
-.btn{margin-top:1rem;background:#111;color:#fff;border:0;padding:.8rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
-.empty{text-align:center;color:#666}
-.who{margin:.5rem .2rem 0}
+.btn{margin-top:1rem;background:var(--ink);color:#f7efe2;border:0;padding:.85rem 1.1rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
+.empty{text-align:center;color:#6b5c4c;font-size:1.15rem;padding:1rem}
 iframe.hid{position:fixed;left:-9999px;width:1px;height:1px;border:0}
+.hint{text-align:center;font-size:.95rem;color:#6b5c4c;margin:0 0 1rem}
+@media(max-width:700px){.wall{columns:2 11rem}.card:nth-child(n){transform:none}}
 </style>
 </head>
 <body>
@@ -50,81 +65,117 @@ iframe.hid{position:fixed;left:-9999px;width:1px;height:1px;border:0}
   <div class="rule"></div>
   <p class="date">19 · 09 · 2026</p>
 </header>
-<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Deja tu felicitación, foto o vídeo y se publicará en el muro.</p>
+<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Deja tu felicitación o foto en el muro.</p>
 <nav>
   <button class="on" data-tab="muro">Muro</button>
-  <button data-tab="fotos">Fotos</button>
-  <button data-tab="mensajes">Mensajes</button>
-  <button data-tab="libre">Espacio libre</button>
+  <button data-tab="dejar">Dejar recuerdo</button>
 </nav>
 <section id="muro" class="on">
-  <div id="feed" class="grid"></div>
-  <p id="empty" class="empty">Aún no hay recuerdos publicados.</p>
+  <p class="hint">Fotos, notas y dedicatorias</p>
+  <div id="feed" class="wall"></div>
+  <p id="empty" class="empty">Aún no hay recuerdos. Sé el primero en dejar uno.</p>
 </section>
-<section id="fotos"><div class="form" data-tipo="Foto" data-file="1"></div></section>
-<section id="mensajes"><div class="form" data-tipo="Mensaje"></div></section>
-<section id="libre"><div class="form" data-tipo="Espacio libre"></div></section>
+<section id="dejar">
+  <div class="form">
+    <h2>Para el muro</h2>
+    <form id="envio-form">
+      <label>Tu nombre</label><input name="nombre" required placeholder="Quién lo escribe">
+      <label>Se lo dedicas a</label>
+      <select name="para">
+        <option>Miryam</option>
+        <option>Gloria</option>
+        <option>Joaquín</option>
+        <option>Toda la familia</option>
+      </select>
+      <label>Felicitación</label><textarea name="mensaje" required placeholder="Tu mensaje"></textarea>
+      <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/*,video/*">
+      <button class="btn" type="submit">Colgar en el muro</button>
+    </form>
+  </div>
+</section>
 </div>
 <script>
 const API = "https://api.telegram.org/bot8896535636:AAFgj6XD_r91t_pI2_0TyGBHRpCNkMclFLQ";
 const CHAT = "1891984663";
-function hidden(form, name, value) {
-  let i = form.querySelector('input[name="' + name + '"]');
-  if (!i) { i = document.createElement("input"); i.type = "hidden"; i.name = name; form.appendChild(i); }
+const KEY = "muro-local";
+function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function cardHTML(p){
+  const src = p.dataUrl || (p.archivo ? "muro-media/" + p.archivo : "");
+  const media = p.tipo === "video" && src ? `<video src="${src}" controls></video>` : (src ? `<img src="${src}" alt="">` : "");
+  const note = !src ? " note" : "";
+  const txt = p.texto ? `<div class="msg">${esc(p.texto)}</div>` : "";
+  return `<article class="card${note}"><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span class="de">De ${esc(p.nombre||"")}</span></div></article>`;
+}
+function draw(items){
+  const feed = document.getElementById("feed");
+  const empty = document.getElementById("empty");
+  if (!items.length){ empty.hidden=false; feed.innerHTML=""; return; }
+  empty.hidden = true;
+  feed.innerHTML = items.map(cardHTML).join("");
+}
+function localItems(){
+  try { return JSON.parse(localStorage.getItem(KEY)||"[]"); } catch(e){ return []; }
+}
+function load(){
+  Promise.all([
+    fetch("muro.json").then(r=>r.ok?r.json():[]).catch(()=>[]),
+    Promise.resolve(localItems())
+  ]).then(([pub, loc])=>{
+    const seen = new Set((pub||[]).map(p=>(p.nombre||"")+"|"+(p.texto||"")+"|"+(p.archivo||"")));
+    const extra = loc.filter(p=>!seen.has((p.nombre||"")+"|"+(p.texto||"")+"|"+(p.archivo||"")));
+    draw([].concat(extra, pub||[]));
+  });
+}
+function hidden(form, name, value){
+  let i = form.querySelector('input[name="'+name+'"]');
+  if (!i){ i=document.createElement("input"); i.type="hidden"; i.name=name; form.appendChild(i); }
   i.value = value;
 }
-document.querySelectorAll(".form").forEach(box => {
-  const fileField = box.dataset.file ? `<label>Foto o vídeo</label><input name="media" type="file" accept="image/*,video/*">` : "";
-  box.innerHTML = `<form method="post" target="envio" enctype="multipart/form-data">
-    <label>Tu nombre</label><input name="nombre" required>
-    <label>Para</label>
-    <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
-    <label>Texto</label><textarea name="mensaje" required></textarea>
-    ${fileField}
-    <button class="btn" type="submit">Enviar felicitación</button>
-  </form>`;
-  box.querySelector("form").addEventListener("submit", e => {
-    e.preventDefault();
-    const f = e.target;
-    const caption = "Felicidades Miryam\n" + box.dataset.tipo + " para " + f.para.value + "\nDe: " + f.nombre.value.trim() + "\n" + f.mensaje.value.trim();
-    const media = f.media && f.media.files && f.media.files[0];
-    hidden(f, "chat_id", CHAT);
-    f.target = "envio";
-    f.method = "POST";
-    if (media) {
-      const isVid = (media.type || "").indexOf("video") === 0;
-      f.enctype = "multipart/form-data";
-      f.action = API + (isVid ? "/sendVideo" : "/sendPhoto");
-      f.media.name = isVid ? "video" : "photo";
-      hidden(f, "caption", caption);
-    } else {
-      f.enctype = "application/x-www-form-urlencoded";
-      f.action = API + "/sendMessage";
-      hidden(f, "text", caption);
-    }
-    f.submit();
-    setTimeout(() => { location.href = "gracias.html"; }, 400);
-  });
+document.getElementById("envio-form").addEventListener("submit", e=>{
+  e.preventDefault();
+  const f = e.target;
+  const nombre = f.nombre.value.trim();
+  const para = f.para.value;
+  const texto = f.mensaje.value.trim();
+  const media = f.media && f.media.files && f.media.files[0];
+  const caption = "NOMBRE: "+nombre+"\nPARA: "+para+"\nTEXTO: "+texto;
+  const saveLocal = (dataUrl, tipo)=>{
+    const item = {nombre, para, texto, tipo, dataUrl, archivo:""};
+    const all = localItems();
+    all.unshift(item);
+    try { localStorage.setItem(KEY, JSON.stringify(all)); } catch(err){}
+    document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
+    document.querySelector('[data-tab="muro"]').classList.add("on");
+    document.getElementById("muro").classList.add("on");
+    load();
+  };
+  hidden(f,"chat_id",CHAT);
+  f.target="envio"; f.method="POST";
+  if (media){
+    const isVid = (media.type||"").indexOf("video")===0;
+    f.enctype="multipart/form-data";
+    f.action = API + (isVid?"/sendVideo":"/sendPhoto");
+    f.media.name = isVid?"video":"photo";
+    hidden(f,"caption",caption);
+    const reader = new FileReader();
+    reader.onload = ()=> saveLocal(reader.result, isVid?"video":"image");
+    reader.readAsDataURL(media);
+  } else {
+    f.enctype="application/x-www-form-urlencoded";
+    f.action = API + "/sendMessage";
+    hidden(f,"text",caption);
+    saveLocal("","texto");
+  }
+  f.submit();
 });
-document.querySelectorAll("nav button").forEach(b => {
-  b.onclick = () => {
-    document.querySelectorAll("nav button,section").forEach(x => x.classList.remove("on"));
+document.querySelectorAll("nav button").forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
     b.classList.add("on");
     document.getElementById(b.dataset.tab).classList.add("on");
   };
 });
-fetch("muro.json").then(r => r.ok ? r.json() : []).then(items => {
-  const feed = document.getElementById("feed");
-  const empty = document.getElementById("empty");
-  if (!items || !items.length) return;
-  empty.hidden = true;
-  feed.innerHTML = items.map(p => {
-    const src = p.archivo ? "muro-media/" + p.archivo : "";
-    const media = p.tipo === "video" && src ? `<video src="${src}" controls></video>` : (src ? `<img src="${src}" alt="">` : "");
-    const txt = p.texto ? `<div>${String(p.texto).replace(/</g,"")}</div>` : "";
-    return `<article class="card">${media}${txt}<p class="who">${p.nombre || ""}</p></article>`;
-  }).join("");
-}).catch(()=>{});
+load();
 </script>
 </body>
 </html>

@@ -1,16 +1,37 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Muro · MIRYAM 25</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;background:#faf8f4;color:#171717;font-family:"Cormorant Garamond",Georgia,serif}
-header{text-align:center;padding:3rem 1rem 1.5rem}h1{font-family:"Great Vibes",cursive;font-size:clamp(3rem,9vw,5.5rem);font-weight:400;margin:0}
+:root{--ink:#2a2118;--rose:#c46a6a;--gold:#b0893e}
+*{box-sizing:border-box}body{margin:0;background:#efe4d0;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif}
+header{text-align:center;padding:3rem 1rem 1.2rem}h1{font-family:"Great Vibes",cursive;font-size:clamp(3rem,9vw,5.5rem);font-weight:400;margin:0}
 .sub{letter-spacing:.25em;text-transform:uppercase}.actions{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0}
-.btn{padding:.75rem 1.2rem;background:#111;color:#fff;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem}
-.btn.alt{background:transparent;color:#111;border:1px solid #111}main{columns:3 16rem;column-gap:1rem;max-width:1050px;margin:auto;padding:1rem 1rem 4rem}
-.card{break-inside:avoid;background:#fff;padding:.65rem;margin:0 0 1rem;box-shadow:0 2px 14px #00000010}img,video{display:block;width:100%;height:auto}
-.message{white-space:pre-wrap;font-size:1.25rem;line-height:1.45;padding:1rem;margin:0}.author{margin:.65rem .25rem .2rem;font-size:1.05rem;font-weight:600}
+.btn{padding:.75rem 1.2rem;background:#2a2118;color:#f7efe2;text-decoration:none;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem}
+.btn.alt{background:transparent;color:#2a2118;border:1px solid #2a2118}
+main{columns:3 16rem;column-gap:1.1rem;max-width:1120px;margin:auto;padding:1rem 1rem 4rem}
+.card{break-inside:avoid;background:#fffdf8;padding:.7rem;margin:0 0 1.1rem;box-shadow:0 10px 24px #00000016;position:relative}
+.card:nth-child(3n){transform:rotate(-1deg)}.card.note{background:#fff4d6;padding:1.1rem}
+img,video{display:block;width:100%;height:auto}
+.msg{white-space:pre-wrap;font-size:1.22rem;line-height:1.45;margin:.7rem .15rem 0}
+.meta{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin:.65rem .15rem 0}
+.para{font-family:"Great Vibes",cursive;font-size:1.5rem;color:var(--rose)}
 .empty{text-align:center;column-span:all;font-size:1.25rem}
-</style></head><body><header><h1>Miryam 25</h1><p class="sub">Nuestro muro</p><div class="actions">
-<a class="btn alt" href="index.html">Volver</a></div></header>
-<main><p class="empty">Aún no hay recuerdos publicados.</p></main></body></html>
+</style></head><body>
+<header><h1>Miryam 25</h1><p class="sub">Nuestro muro</p>
+<div class="actions"><a class="btn alt" href="index.html">Volver</a></div></header>
+<main id="feed"><p class="empty">Aún no hay recuerdos publicados.</p></main>
+<script>
+function esc(s){return String(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+fetch("muro.json").then(r=>r.ok?r.json():[]).then(items=>{
+  if(!items||!items.length) return;
+  document.getElementById("feed").innerHTML = items.map(p=>{
+    const src = p.archivo ? "muro-media/"+p.archivo : "";
+    const media = p.tipo==="video"&&src?`<video src="${src}" controls></video>`:(src?`<img src="${src}" alt="">`:"");
+    const note = src?"":" note";
+    const txt = p.texto?`<div class="msg">${esc(p.texto)}</div>`:"";
+    return `<article class="card${note}">${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
+  }).join("");
+}).catch(()=>{});
+</script>
+</body></html>

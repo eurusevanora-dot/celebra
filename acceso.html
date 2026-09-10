@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MIRYAM · twenty five</title>
+<meta property="og:title" content="MIRYAM · twenty five">
+<meta property="og:description" content="19 · 09 · 2026 · Hay mucho que celebrar">
+<meta property="og:image" content="https://eurusevanora-dot.github.io/celebra/muro-media/Prueba-foto-20260910-0019.jpg">
+<meta property="og:url" content="https://eurusevanora-dot.github.io/celebra/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
@@ -28,12 +34,13 @@ label{display:block;margin:.7rem 0 .25rem}
 input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #ccc}
 textarea{min-height:110px}
 .btn{margin-top:1rem;background:#111;color:#fff;border:0;padding:.8rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
-.hint{text-align:center;color:#555;margin-top:.8rem}
 .empty{text-align:center;color:#666}
 .who{margin:.5rem .2rem 0}
+iframe.hid{position:absolute;width:0;height:0;border:0;visibility:hidden}
 </style>
 </head>
 <body>
+<iframe class="hid" name="envio" title=""></iframe>
 <div class="wrap">
 <header>
   <p class="name">MIRYAM</p>
@@ -43,7 +50,7 @@ textarea{min-height:110px}
   <div class="rule"></div>
   <p class="date">19 · 09 · 2026</p>
 </header>
-<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Felicitación, foto o vídeo: se envía y Pepe lo publica en el muro.</p>
+<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Deja tu felicitación, foto o vídeo y se publicará en el muro.</p>
 <nav>
   <button class="on" data-tab="muro">Muro</button>
   <button data-tab="fotos">Fotos</button>
@@ -54,36 +61,52 @@ textarea{min-height:110px}
   <div id="feed" class="grid"></div>
   <p id="empty" class="empty">Aún no hay recuerdos publicados.</p>
 </section>
-<section id="fotos"><div class="form" data-tipo="Foto"></div></section>
+<section id="fotos"><div class="form" data-tipo="Foto" data-file="1"></div></section>
 <section id="mensajes"><div class="form" data-tipo="Mensaje"></div></section>
 <section id="libre"><div class="form" data-tipo="Espacio libre"></div></section>
 </div>
 <script>
-const BOT = "Nexusmetadatabot";
+const API = "https://api.telegram.org/bot8896535636:AAFgj6XD_r91t_pI2_0TyGBHRpCNkMclFLQ";
+const CHAT = "1891984663";
 document.querySelectorAll(".form").forEach(box => {
+  const fileField = box.dataset.file ? `<label>Foto o vídeo</label><input name="archivo" type="file" accept="image/*,video/*">` : "";
   box.innerHTML = `<form>
     <label>Tu nombre</label><input name="nombre" required>
     <label>Para</label>
     <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
     <label>Texto</label><textarea name="mensaje" required></textarea>
+    ${fileField}
     <button class="btn" type="submit">Enviar felicitación</button>
   </form>`;
   box.querySelector("form").addEventListener("submit", e => {
     e.preventDefault();
     const f = e.target;
-    const txt = encodeURIComponent(
-      "Felicidades Miryam\n" +
-      box.dataset.tipo + " para " + f.para.value + "\n" +
-      "De: " + f.nombre.value.trim() + "\n" +
-      f.mensaje.value.trim()
-    );
-    const send = document.createElement("a");
-    send.href = "https://t.me/" + BOT + "?text=" + txt;
-    send.target = "_blank";
-    send.rel = "noopener";
-    send.style.display = "none";
-    document.body.appendChild(send);
-    send.click();
+    const caption = "Felicidades Miryam\n" + box.dataset.tipo + " para " + f.para.value + "\nDe: " + f.nombre.value.trim() + "\n" + f.mensaje.value.trim();
+    const file = f.archivo && f.archivo.files && f.archivo.files[0];
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.target = "envio";
+    form.enctype = file ? "multipart/form-data" : "application/x-www-form-urlencoded";
+    const add = (n, v) => { const i = document.createElement("input"); i.type = "hidden"; i.name = n; i.value = v; form.appendChild(i); };
+    add("chat_id", CHAT);
+    if (file) {
+      const isVid = (file.type || "").startsWith("video");
+      form.action = API + (isVid ? "/sendVideo" : "/sendPhoto");
+      add("caption", caption);
+      const fi = document.createElement("input");
+      fi.type = "file";
+      fi.name = isVid ? "video" : "photo";
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      fi.files = dt.files;
+      form.appendChild(fi);
+    } else {
+      form.action = API + "/sendMessage";
+      add("text", caption);
+    }
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
     location.href = "gracias.html";
   });
 });

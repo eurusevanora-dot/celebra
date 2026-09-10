@@ -52,10 +52,19 @@ textarea{min-height:110px}
 .empty,.hint,.privacy{text-align:center;color:#6b5c4c}
 .privacy{font-size:.92rem;line-height:1.4}
 .foot{text-align:center;margin-top:2.5rem;font-size:.8rem;letter-spacing:.2em;color:#8a7a68}
+.wall-count{position:fixed;z-index:20;top:max(12px,env(safe-area-inset-top));right:12px;background:#2a2118e8;color:#fff8ec;border:1px solid #ffffff55;border-radius:999px;padding:.5rem .75rem;box-shadow:0 5px 18px #0003;font-size:.82rem;letter-spacing:.08em}
+.wall-photo{cursor:zoom-in}
+.wall-photo:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.lightbox{position:fixed;z-index:100;inset:0;background:#140f0bd9;display:flex;align-items:center;justify-content:center;padding:1rem;border:0;width:100%;height:100%}
+.lightbox[hidden]{display:none}
+.lightbox img{display:block;max-width:min(96vw,1200px);max-height:92vh;object-fit:contain;cursor:zoom-out;box-shadow:0 12px 50px #000a}
+.lightbox-close{position:absolute;top:max(12px,env(safe-area-inset-top));right:14px;width:44px;height:44px;border:1px solid #fff9;border-radius:50%;background:#21170fdd;color:white;font-size:1.8rem;line-height:1;cursor:pointer}
+body.lightbox-open{overflow:hidden}
 @media(max-width:700px){.wall{columns:2 11rem}.card:nth-child(n){transform:none}}
 </style>
 </head>
 <body>
+<div id="wall-count" class="wall-count" role="status" aria-live="polite">0 recuerdos</div>
 <div class="wrap">
 <header>
   <p class="name">MIRYAM</p>
@@ -93,6 +102,10 @@ textarea{min-height:110px}
 </section>
 <p class="foot">MIRYAM · 25</p>
 </div>
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Fotografía ampliada" hidden>
+  <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Cerrar fotografía">×</button>
+  <img id="lightbox-image" src="" alt="">
+</div>
 <script>
 const SUPABASE_URL = "https://gacftogptdjlwfutwwgr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_OBFgeD6fis4DQ1eyD1Xm4w_sICMerdK";
@@ -113,11 +126,13 @@ function validEntry(p){
 function publicMedia(path){return `${SUPABASE_URL}/storage/v1/object/public/celebra-media/${path.split("/").map(encodeURIComponent).join("/")}`}
 function cardHTML(p){
   const src=p.media_path?publicMedia(p.media_path):"";
-  const media=p.media_type==="video"&&src?`<video src="${src}" controls preload="metadata"></video>`:(src?`<img src="${src}" alt="Recuerdo de ${esc(p.nombre)}" loading="lazy">`:"");
+  const media=p.media_type==="video"&&src?`<video src="${src}" controls preload="metadata"></video>`:(src?`<img class="wall-photo" src="${src}" alt="Recuerdo de ${esc(p.nombre)}" loading="lazy" role="button" tabindex="0" aria-label="Ampliar fotografía de ${esc(p.nombre)}">`:"");
   return `<article class="card${src?"":" note"}"><span class="tape"></span>${media}<div class="msg">${esc(p.mensaje)}</div><div class="meta"><span class="para">Para ${esc(p.para)}</span><span>De ${esc(p.nombre)}</span></div></article>`;
 }
 function draw(items){
   const feed=document.getElementById("feed"),empty=document.getElementById("empty");
+  const count=document.getElementById("wall-count");
+  count.textContent=`${items.length} ${items.length===1?"recuerdo":"recuerdos"}`;
   if(!items.length){empty.hidden=false;feed.innerHTML="";return;}
   empty.hidden=true;feed.innerHTML=items.map(cardHTML).join("");
 }
@@ -174,6 +189,24 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
   b.classList.add("on");document.getElementById(b.dataset.tab).classList.add("on");
 });
+const lightbox=document.getElementById("lightbox"),lightboxImage=document.getElementById("lightbox-image");
+let lastPhoto=null;
+function openPhoto(photo){
+  lastPhoto=photo;lightboxImage.src=photo.src;lightboxImage.alt=photo.alt;
+  lightbox.hidden=false;document.body.classList.add("lightbox-open");
+  document.getElementById("lightbox-close").focus();
+}
+function closePhoto(){
+  lightbox.hidden=true;lightboxImage.src="";document.body.classList.remove("lightbox-open");
+  if(lastPhoto&&document.contains(lastPhoto))lastPhoto.focus();
+}
+document.getElementById("feed").addEventListener("click",e=>{if(e.target.matches(".wall-photo"))openPhoto(e.target)});
+document.getElementById("feed").addEventListener("keydown",e=>{
+  if(e.target.matches(".wall-photo")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openPhoto(e.target)}
+});
+lightbox.addEventListener("click",e=>{if(e.target===lightbox||e.target===lightboxImage)closePhoto()});
+document.getElementById("lightbox-close").addEventListener("click",closePhoto);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!lightbox.hidden)closePhoto()});
 load();setInterval(load,20000);
 </script>
 </body>

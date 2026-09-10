@@ -9,48 +9,47 @@
 <meta property="og:image" content="https://eurusevanora-dot.github.io/celebra/muro-media/Prueba-foto-20260910-0019.jpg">
 <meta property="og:url" content="https://eurusevanora-dot.github.io/celebra/">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#2a2118;--paper:#f3ead8;--card:#fffdf8;--gold:#b0893e;--rose:#c46a6a}
+:root{--ink:#2a2118;--card:#fffdf8;--gold:#b0893e;--rose:#c46a6a}
 *{box-sizing:border-box}
-body{margin:0;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;background:
-  radial-gradient(ellipse at 20% 0%,#fff6e8,transparent 50%),
-  radial-gradient(ellipse at 90% 20%,#f0d9c8,transparent 45%),
-  #efe4d0}
+body{margin:0;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;background:radial-gradient(ellipse at 20% 0%,#fff6e8,transparent 50%),radial-gradient(ellipse at 90% 20%,#f0d9c8,transparent 45%),#efe4d0}
 .wrap{max-width:1120px;margin:0 auto;padding:2.2rem 1rem 5rem}
-header{text-align:center;padding:1rem 0 0.4rem}
+header{text-align:center}
 .name{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.32em;margin:0}
 .script{font-family:"Great Vibes",cursive;font-size:clamp(2.2rem,8vw,3.6rem);margin:.15rem 0;color:#5a3d2b}
 .caps{letter-spacing:.22em;font-size:clamp(1.1rem,3.6vw,1.7rem)}
 .rule{width:42px;height:1px;background:var(--gold);margin:1rem auto}
-.date{letter-spacing:.3em;font-size:.95rem}
+.date{letter-spacing:.3em}
 .intro{max-width:34rem;margin:.8rem auto 1.2rem;line-height:1.55;font-size:1.18rem;text-align:center}
 nav{display:flex;gap:.45rem;justify-content:center;flex-wrap:wrap;margin:0 0 1.4rem}
 nav button{background:transparent;border:1px solid #2a211855;font-family:inherit;letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;padding:.6rem .95rem;cursor:pointer}
 nav button.on{background:var(--ink);color:#f7efe2;border-color:var(--ink)}
 section{display:none}section.on{display:block}
 .wall{columns:3 17rem;column-gap:1.15rem}
-.card{break-inside:avoid;background:var(--card);margin:0 0 1.15rem;padding:.7rem .7rem .85rem;box-shadow:0 10px 24px #00000018,0 1px 0 #fff inset;position:relative}
+.card{break-inside:avoid;background:var(--card);margin:0 0 1.15rem;padding:.7rem .7rem .85rem;box-shadow:0 10px 24px #00000018;position:relative}
 .card:nth-child(3n){transform:rotate(-1.2deg)}
 .card:nth-child(3n+1){transform:rotate(.8deg)}
-.card:nth-child(3n+2){transform:rotate(-.4deg)}
 .card.note{background:#fff4d6;padding:1.1rem 1rem 1rem}
-.card img,.card video{width:100%;display:block;background:#eee}
-.tape{position:absolute;top:-9px;left:50%;width:54px;height:16px;margin-left:-27px;background:#f7e7a388;transform:rotate(-2deg)}
+.card img,.card video{width:100%;display:block}
+.tape{position:absolute;top:-9px;left:50%;width:54px;height:16px;margin-left:-27px;background:#f7e7a388}
 .msg{font-size:1.22rem;line-height:1.45;margin:.75rem .15rem .2rem;white-space:pre-wrap}
 .meta{display:flex;justify-content:space-between;gap:.6rem;align-items:baseline;margin:.7rem .15rem 0;flex-wrap:wrap}
 .para{font-family:"Great Vibes",cursive;font-size:1.55rem;color:var(--rose)}
-.de{font-size:.95rem;letter-spacing:.06em}
-.form{max-width:30rem;margin:0 auto 1.6rem;background:var(--card);padding:1.25rem 1.2rem 1.35rem;box-shadow:0 10px 28px #00000014}
+.form{max-width:30rem;margin:0 auto 1.6rem;background:var(--card);padding:1.25rem 1.2rem;box-shadow:0 10px 28px #00000014}
 .form h2{font-family:"Great Vibes",cursive;font-weight:400;font-size:2rem;margin:0 0 .4rem;text-align:center}
-label{display:block;margin:.7rem 0 .25rem;letter-spacing:.08em;font-size:.95rem}
+label{display:block;margin:.7rem 0 .25rem}
 input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #cbbda8;background:#fffdf8}
 textarea{min-height:110px}
 .btn{margin-top:1rem;background:var(--ink);color:#f7efe2;border:0;padding:.85rem 1.1rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
-.empty{text-align:center;color:#6b5c4c;font-size:1.15rem;padding:1rem}
+.empty{text-align:center;color:#6b5c4c;font-size:1.15rem}
 iframe.hid{position:fixed;left:-9999px;width:1px;height:1px;border:0}
-.hint{text-align:center;font-size:.95rem;color:#6b5c4c;margin:0 0 1rem}
+.hint{text-align:center;color:#6b5c4c;margin:0 0 1rem}
+.del{position:absolute;top:8px;right:8px;display:none;background:#2a2118;color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;line-height:28px}
+body.admin .del{display:block}
+.adminbar{display:none;text-align:center;margin:0 0 1rem}
+body.admin .adminbar{display:block}
+.foot{text-align:center;margin-top:2.5rem;font-size:.8rem;letter-spacing:.2em;color:#8a7a68;cursor:pointer}
 @media(max-width:700px){.wall{columns:2 11rem}.card:nth-child(n){transform:none}}
 </style>
 </head>
@@ -65,116 +64,114 @@ iframe.hid{position:fixed;left:-9999px;width:1px;height:1px;border:0}
   <div class="rule"></div>
   <p class="date">19 · 09 · 2026</p>
 </header>
-<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Deja tu felicitación o foto en el muro.</p>
+<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Todo lo que dejes aquí se ve en el muro público.</p>
 <nav>
   <button class="on" data-tab="muro">Muro</button>
   <button data-tab="dejar">Dejar recuerdo</button>
 </nav>
 <section id="muro" class="on">
-  <p class="hint">Fotos, notas y dedicatorias</p>
+  <p class="hint">Fotos y felicitaciones a la vista de todos</p>
+  <p class="adminbar">Modo borrar activo. Pulsa × en una tarjeta.</p>
   <div id="feed" class="wall"></div>
-  <p id="empty" class="empty">Aún no hay recuerdos. Sé el primero en dejar uno.</p>
+  <p id="empty" class="empty">Aún no hay recuerdos. Sé el primero.</p>
 </section>
 <section id="dejar">
   <div class="form">
     <h2>Para el muro</h2>
     <form id="envio-form">
-      <label>Tu nombre</label><input name="nombre" required placeholder="Quién lo escribe">
+      <label>Tu nombre</label><input name="nombre" required>
       <label>Se lo dedicas a</label>
-      <select name="para">
-        <option>Miryam</option>
-        <option>Gloria</option>
-        <option>Joaquín</option>
-        <option>Toda la familia</option>
-      </select>
-      <label>Felicitación</label><textarea name="mensaje" required placeholder="Tu mensaje"></textarea>
+      <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
+      <label>Felicitación</label><textarea name="mensaje" required></textarea>
       <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/*,video/*">
-      <button class="btn" type="submit">Colgar en el muro</button>
+      <button class="btn" type="submit">Publicar en el muro</button>
     </form>
   </div>
 </section>
+<p class="foot" id="lock">MIRYAM · 25</p>
 </div>
 <script>
 const API = "https://api.telegram.org/bot8896535636:AAFgj6XD_r91t_pI2_0TyGBHRpCNkMclFLQ";
 const CHAT = "1891984663";
 const KEY = "muro-local";
+const PIN = "miryam25";
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function cardHTML(p){
+function cardHTML(p,i){
   const src = p.dataUrl || (p.archivo ? "muro-media/" + p.archivo : "");
   const media = p.tipo === "video" && src ? `<video src="${src}" controls></video>` : (src ? `<img src="${src}" alt="">` : "");
   const note = !src ? " note" : "";
   const txt = p.texto ? `<div class="msg">${esc(p.texto)}</div>` : "";
-  return `<article class="card${note}"><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span class="de">De ${esc(p.nombre||"")}</span></div></article>`;
+  const id = encodeURIComponent(p.archivo || ("local-"+i));
+  return `<article class="card${note}" data-id="${id}"><button class="del" type="button" aria-label="Borrar">×</button><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
 }
+function localItems(){ try { return JSON.parse(localStorage.getItem(KEY)||"[]"); } catch(e){ return []; } }
 function draw(items){
   const feed = document.getElementById("feed");
   const empty = document.getElementById("empty");
+  window._items = items;
   if (!items.length){ empty.hidden=false; feed.innerHTML=""; return; }
   empty.hidden = true;
   feed.innerHTML = items.map(cardHTML).join("");
-}
-function localItems(){
-  try { return JSON.parse(localStorage.getItem(KEY)||"[]"); } catch(e){ return []; }
+  feed.querySelectorAll(".del").forEach((b,i)=> b.onclick = ()=> borrar(items[i], i));
 }
 function load(){
-  Promise.all([
-    fetch("muro.json").then(r=>r.ok?r.json():[]).catch(()=>[]),
-    Promise.resolve(localItems())
-  ]).then(([pub, loc])=>{
-    const seen = new Set((pub||[]).map(p=>(p.nombre||"")+"|"+(p.texto||"")+"|"+(p.archivo||"")));
-    const extra = loc.filter(p=>!seen.has((p.nombre||"")+"|"+(p.texto||"")+"|"+(p.archivo||"")));
-    draw([].concat(extra, pub||[]));
+  fetch("muro.json").then(r=>r.ok?r.json():[]).catch(()=>[]).then(pub=>{
+    const loc = localItems();
+    const seen = new Set((pub||[]).map(p=>(p.nombre||"")+"|"+(p.texto||"")));
+    draw([].concat(loc.filter(p=>!seen.has((p.nombre||"")+"|"+(p.texto||""))), pub||[]));
   });
 }
-function hidden(form, name, value){
-  let i = form.querySelector('input[name="'+name+'"]');
-  if (!i){ i=document.createElement("input"); i.type="hidden"; i.name=name; form.appendChild(i); }
-  i.value = value;
+function hidden(form,name,value){
+  let i=form.querySelector('input[name="'+name+'"]');
+  if(!i){i=document.createElement("input");i.type="hidden";i.name=name;form.appendChild(i);} i.value=value;
+}
+function tg(text){
+  fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:text})});
+}
+function borrar(p){
+  if(!confirm("¿Quitar esta publicación del muro?")) return;
+  if(p.archivo) tg("BORRAR "+p.archivo);
+  const loc = localItems().filter(x=>!((x.nombre===p.nombre)&&(x.texto===p.texto)));
+  localStorage.setItem(KEY, JSON.stringify(loc));
+  load();
 }
 document.getElementById("envio-form").addEventListener("submit", e=>{
   e.preventDefault();
-  const f = e.target;
-  const nombre = f.nombre.value.trim();
-  const para = f.para.value;
-  const texto = f.mensaje.value.trim();
-  const media = f.media && f.media.files && f.media.files[0];
-  const caption = "NOMBRE: "+nombre+"\nPARA: "+para+"\nTEXTO: "+texto;
-  const saveLocal = (dataUrl, tipo)=>{
-    const item = {nombre, para, texto, tipo, dataUrl, archivo:""};
-    const all = localItems();
-    all.unshift(item);
-    try { localStorage.setItem(KEY, JSON.stringify(all)); } catch(err){}
+  const f=e.target;
+  const nombre=f.nombre.value.trim(), para=f.para.value, texto=f.mensaje.value.trim();
+  const media=f.media&&f.media.files&&f.media.files[0];
+  const caption="PUBLICAR\nNOMBRE: "+nombre+"\nPARA: "+para+"\nTEXTO: "+texto;
+  const saveLocal=(dataUrl,tipo)=>{
+    const all=localItems(); all.unshift({nombre,para,texto,tipo,dataUrl,archivo:""});
+    try{localStorage.setItem(KEY,JSON.stringify(all))}catch(err){}
     document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
     document.querySelector('[data-tab="muro"]').classList.add("on");
-    document.getElementById("muro").classList.add("on");
-    load();
+    document.getElementById("muro").classList.add("on"); load();
   };
-  hidden(f,"chat_id",CHAT);
-  f.target="envio"; f.method="POST";
-  if (media){
-    const isVid = (media.type||"").indexOf("video")===0;
-    f.enctype="multipart/form-data";
-    f.action = API + (isVid?"/sendVideo":"/sendPhoto");
-    f.media.name = isVid?"video":"photo";
-    hidden(f,"caption",caption);
-    const reader = new FileReader();
-    reader.onload = ()=> saveLocal(reader.result, isVid?"video":"image");
-    reader.readAsDataURL(media);
+  hidden(f,"chat_id",CHAT); f.target="envio"; f.method="POST";
+  if(media){
+    const isVid=(media.type||"").indexOf("video")===0;
+    f.enctype="multipart/form-data"; f.action=API+(isVid?"/sendVideo":"/sendPhoto");
+    f.media.name=isVid?"video":"photo"; hidden(f,"caption",caption);
+    const r=new FileReader(); r.onload=()=>saveLocal(r.result,isVid?"video":"image"); r.readAsDataURL(media);
   } else {
-    f.enctype="application/x-www-form-urlencoded";
-    f.action = API + "/sendMessage";
-    hidden(f,"text",caption);
-    saveLocal("","texto");
+    f.enctype="application/x-www-form-urlencoded"; f.action=API+"/sendMessage"; hidden(f,"text",caption); saveLocal("","texto");
   }
   f.submit();
 });
-document.querySelectorAll("nav button").forEach(b=>{
-  b.onclick = ()=>{
-    document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
-    b.classList.add("on");
-    document.getElementById(b.dataset.tab).classList.add("on");
-  };
+document.querySelectorAll("nav button").forEach(b=> b.onclick=()=>{
+  document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); document.getElementById(b.dataset.tab).classList.add("on");
 });
+let taps=0;
+document.getElementById("lock").onclick=()=>{
+  taps++;
+  if(taps<5) return;
+  taps=0;
+  const p=prompt("Clave para borrar publicaciones");
+  if(p===PIN){ document.body.classList.add("admin"); sessionStorage.setItem("admin","1"); }
+};
+if(sessionStorage.getItem("admin")==="1" || location.hash==="#editar") document.body.classList.add("admin");
 load();
 </script>
 </body>

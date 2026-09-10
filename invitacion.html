@@ -20,8 +20,9 @@
     *{box-sizing:border-box}
     html,body{min-height:100%;margin:0}
     body{display:grid;place-items:center;padding:24px;background:#eadbc6;color:#34271d;font-family:"Cormorant Garamond",Georgia,serif}
-    .card{position:relative;isolation:isolate;width:min(100%,1100px);min-height:min(77vw,580px);display:grid;place-items:center;overflow:hidden;background:#f7ead7 url("assets/invitacion-fondo.png") center/cover no-repeat;box-shadow:0 24px 70px #4b2d172e;border:1px solid #fff9}
-    .card::before{content:"";position:absolute;inset:7%;z-index:-1;background:radial-gradient(ellipse,#fffaf0ee 0%,#fff7e4cb 54%,transparent 76%);filter:blur(4px)}
+    .card{position:relative;isolation:isolate;width:min(100%,1100px);min-height:min(77vw,580px);display:grid;place-items:center;overflow:hidden;background:#f7ead7;box-shadow:0 24px 70px #4b2d172e;border:1px solid #fff9}
+    .backdrop{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+    .card::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at center,#fffaf0f2 0%,#fff7e4d9 38%,#fff7e466 57%,transparent 72%)}
     main{text-align:center;width:min(64%,650px);padding:56px 18px}
     .eyebrow{margin:0 0 8px;letter-spacing:.42em;font-size:clamp(.72rem,1.8vw,1rem);font-weight:600}
     h1{font-family:"Great Vibes",cursive;font-weight:400;font-size:clamp(4rem,10vw,7.6rem);line-height:.9;margin:0;color:#9a5960;text-shadow:0 2px 0 #fff8}
@@ -37,6 +38,7 @@
 </head>
 <body>
   <article class="card">
+    <img class="backdrop" src="assets/invitacion-fondo.png" alt="" aria-hidden="true">
     <main>
       <p class="eyebrow">ESTÁS INVITADO A CELEBRAR</p>
       <h1>Miryam</h1>

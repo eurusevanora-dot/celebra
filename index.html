@@ -85,9 +85,9 @@ textarea{min-height:110px}
       <label>Felicitación</label><textarea name="mensaje" required maxlength="2000"></textarea>
       <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm">
       <div class="trap" aria-hidden="true"><label>No rellenar<input name="website" tabindex="-1" autocomplete="off"></label></div>
-      <button class="btn" type="submit">Enviar para aprobación</button>
+      <button class="btn" type="submit">Publicar en el muro</button>
       <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-      <p class="privacy">Se envía aquí mismo, sin salir de la web. Nada aparece en el muro hasta que Pepe lo apruebe. No incluyas teléfonos ni correos.</p>
+      <p class="privacy">Se publica automáticamente aquí mismo, sin salir de la web. No incluyas teléfonos, correos ni otros datos privados.</p>
     </form>
   </div>
 </section>
@@ -153,7 +153,7 @@ document.getElementById("envio-form").addEventListener("submit",async e=>{
     let media_path=null,media_type=null;
     if(media){
       const ext=ALLOWED_FILES.get(media.type);
-      media_path=`${CONTEXT.organization_id}/${CONTEXT.project_id}/${CONTEXT.environment}/pending/${id}.${ext}`;
+      media_path=`${CONTEXT.organization_id}/${CONTEXT.project_id}/${CONTEXT.environment}/published/${id}.${ext}`;
       media_type=media.type.startsWith("video/")?"video":"image";
       const upload=await fetch(`${SUPABASE_URL}/storage/v1/object/celebra-media/${media_path}`,{
         method:"POST",headers:{...API_HEADERS,"Content-Type":media.type,"x-upsert":"false"},body:media
@@ -165,10 +165,10 @@ document.getElementById("envio-form").addEventListener("submit",async e=>{
       body:JSON.stringify({id,...CONTEXT,nombre,para,mensaje,media_path,media_type})
     });
     if(!save.ok) throw new Error(`No se pudo guardar (${save.status})`);
-    f.reset();status.textContent="¡Recibido! Aparecerá en el muro cuando sea aprobado.";status.classList.add("ok");
+    f.reset();status.textContent="¡Publicado! Ya aparece en el muro.";status.classList.add("ok");load();
   }catch(err){
     console.error(err);status.textContent="No se ha podido enviar. Comprueba la conexión e inténtalo de nuevo.";status.classList.add("error");
-  }finally{button.disabled=false;button.textContent="Enviar para aprobación";}
+  }finally{button.disabled=false;button.textContent="Publicar en el muro";}
 });
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));

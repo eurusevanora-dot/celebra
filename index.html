@@ -46,6 +46,9 @@ input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #c
 textarea{min-height:110px}
 .btn{margin-top:1rem;background:var(--ink);color:#f7efe2;border:0;padding:.85rem 1.1rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
 .btn[disabled]{opacity:.5}
+.form-status{min-height:1.4em;margin:.8rem 0 0;text-align:center;font-size:1rem}
+.form-status.ok{color:#356b45}.form-status.error{color:#9b3030}
+.trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
 .empty,.hint,.privacy{text-align:center;color:#6b5c4c}
 .privacy{font-size:.92rem;line-height:1.4}
 .foot{text-align:center;margin-top:2.5rem;font-size:.8rem;letter-spacing:.2em;color:#8a7a68}
@@ -78,71 +81,100 @@ textarea{min-height:110px}
     <form id="envio-form" method="post">
       <label>Tu nombre</label><input name="nombre" required maxlength="80">
       <label>Se lo dedicas a</label>
-      <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
+      <select name="para"><option>Myrian’s Family</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
       <label>Felicitación</label><textarea name="mensaje" required maxlength="2000"></textarea>
-      <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/*,video/*">
+      <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm">
+      <div class="trap" aria-hidden="true"><label>No rellenar<input name="website" tabindex="-1" autocomplete="off"></label></div>
       <button class="btn" type="submit">Enviar para aprobación</button>
-      <p class="privacy">Se abrirá GitHub para enviar la felicitación. Allí podrás adjuntar la foto o el vídeo. Nada aparece en el muro hasta que Pepe lo apruebe.</p>
+      <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      <p class="privacy">Se envía aquí mismo, sin salir de la web. Nada aparece en el muro hasta que Pepe lo apruebe. No incluyas teléfonos ni correos.</p>
     </form>
   </div>
 </section>
 <p class="foot">MIRYAM · 25</p>
 </div>
-<script type="module">
-import {isMuro, mediaSrc} from "./scripts/muro-guards.js";
-const ISSUE_URL = "https://github.com/eurusevanora-dot/celebra/issues/new";
+<script>
+const SUPABASE_URL = "https://gacftogptdjlwfutwwgr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_OBFgeD6fis4DQ1eyD1Xm4w_sICMerdK";
+const CONTEXT = {organization_id:"myrians-family",project_id:"celebra",environment:"production"};
+const ALLOWED_FOR = new Set(["Myrian’s Family","Gloria","Joaquín","Toda la familia"]);
+const ALLOWED_FILES = new Map([
+  ["image/jpeg","jpg"],["image/png","png"],["image/webp","webp"],["image/gif","gif"],
+  ["video/mp4","mp4"],["video/webm","webm"]
+]);
+const API_HEADERS = {apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`};
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function validEntry(p){
+  return p&&typeof p==="object"&&typeof p.id==="string"&&typeof p.nombre==="string"&&
+    p.nombre.length>0&&p.nombre.length<=80&&ALLOWED_FOR.has(p.para)&&
+    typeof p.mensaje==="string"&&p.mensaje.length>0&&p.mensaje.length<=2000&&
+    (!p.media_path||(typeof p.media_path==="string"&&["image","video"].includes(p.media_type)));
+}
+function publicMedia(path){return `${SUPABASE_URL}/storage/v1/object/public/celebra-media/${path.split("/").map(encodeURIComponent).join("/")}`}
 function cardHTML(p){
-  const src = mediaSrc(p);
-  const media = p.tipo==="video"&&src?`<video src="${src}" controls></video>`:(src?`<img src="${src}" alt="">`:"");
-  const note = src?"":" note";
-  const txt = p.texto?`<div class="msg">${esc(p.texto)}</div>`:"";
-  return `<article class="card${note}"><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
+  const src=p.media_path?publicMedia(p.media_path):"";
+  const media=p.media_type==="video"&&src?`<video src="${src}" controls preload="metadata"></video>`:(src?`<img src="${src}" alt="Recuerdo de ${esc(p.nombre)}" loading="lazy">`:"");
+  return `<article class="card${src?"":" note"}"><span class="tape"></span>${media}<div class="msg">${esc(p.mensaje)}</div><div class="meta"><span class="para">Para ${esc(p.para)}</span><span>De ${esc(p.nombre)}</span></div></article>`;
 }
 function draw(items){
-  const feed=document.getElementById("feed"), empty=document.getElementById("empty");
+  const feed=document.getElementById("feed"),empty=document.getElementById("empty");
   if(!items.length){empty.hidden=false;feed.innerHTML="";return;}
-  empty.hidden=true;
-  feed.innerHTML=items.map(cardHTML).join("");
+  empty.hidden=true;feed.innerHTML=items.map(cardHTML).join("");
 }
 async function load(){
   try{
-    const r=await fetch("muro.json?t="+Date.now(),{cache:"no-store"});
+    const query=new URLSearchParams({
+      select:"id,nombre,para,mensaje,media_path,media_type,created_at",
+      organization_id:"eq.myrians-family",project_id:"eq.celebra",environment:"eq.production",
+      status:"eq.published",order:"created_at.desc"
+    });
+    const r=await fetch(`${SUPABASE_URL}/rest/v1/celebra_entries?${query}`,{headers:API_HEADERS,cache:"no-store"});
     if(!r.ok) throw new Error("HTTP "+r.status);
     const pub=await r.json();
-    if(!isMuro(pub)) throw new Error("muro.json inválido");
+    if(!Array.isArray(pub)||!pub.every(validEntry)) throw new Error("Respuesta del muro inválida");
     draw(pub);
-  }catch(err){
-    console.error(err);
-    draw([]);
-  }
+  }catch(err){console.error(err);draw([])}
 }
-document.getElementById("envio-form").addEventListener("submit", async e=>{
+document.getElementById("envio-form").addEventListener("submit",async e=>{
   e.preventDefault();
-  const f=e.target;
-  const nombre=f.nombre.value.trim(), para=f.para.value, texto=f.mensaje.value.trim();
+  const f=e.target,button=f.querySelector("button[type=submit]"),status=document.getElementById("form-status");
+  const nombre=f.nombre.value.trim(),para=f.para.value,mensaje=f.mensaje.value.trim();
   const media=f.media&&f.media.files&&f.media.files[0];
-  if(!nombre||!texto){f.reportValidity();return;}
-  const body=[
-    "### Tu nombre",nombre,"",
-    "### Se lo dedicas a",para,"",
-    "### Felicitación",texto,"",
-    "### Foto o vídeo (opcional)",
-    media ? `Adjunta aquí de nuevo el archivo: ${media.name}` : "Sin archivo",
-    "","<!-- solicitud-muro-miryam25 -->"
-  ].join("\n");
-  const q=new URLSearchParams({title:`Recuerdo para ${para} — ${nombre}`,body,labels:"pendiente"});
-  if(media){
-    alert("Por seguridad la web no envía archivos directamente. En GitHub, arrastra o selecciona la foto/vídeo antes de crear la solicitud.");
+  status.textContent="";status.className="form-status";
+  if(f.website.value){status.textContent="Recibido. Gracias.";return;}
+  if(!nombre||!mensaje||!ALLOWED_FOR.has(para)){f.reportValidity();return;}
+  if(media&&(!ALLOWED_FILES.has(media.type)||media.size>20*1024*1024)){
+    status.textContent="Usa una foto JPG, PNG, WEBP o GIF, o un vídeo MP4/WEBM de hasta 20 MB.";
+    status.classList.add("error");return;
   }
-  location.assign(ISSUE_URL+"?"+q.toString());
+  button.disabled=true;button.textContent="Enviando…";
+  try{
+    const id=crypto.randomUUID();
+    let media_path=null,media_type=null;
+    if(media){
+      const ext=ALLOWED_FILES.get(media.type);
+      media_path=`${CONTEXT.organization_id}/${CONTEXT.project_id}/${CONTEXT.environment}/pending/${id}.${ext}`;
+      media_type=media.type.startsWith("video/")?"video":"image";
+      const upload=await fetch(`${SUPABASE_URL}/storage/v1/object/celebra-media/${media_path}`,{
+        method:"POST",headers:{...API_HEADERS,"Content-Type":media.type,"x-upsert":"false"},body:media
+      });
+      if(!upload.ok) throw new Error(`No se pudo subir el archivo (${upload.status})`);
+    }
+    const save=await fetch(`${SUPABASE_URL}/rest/v1/celebra_entries`,{
+      method:"POST",headers:{...API_HEADERS,"Content-Type":"application/json",Prefer:"return=minimal"},
+      body:JSON.stringify({id,...CONTEXT,nombre,para,mensaje,media_path,media_type})
+    });
+    if(!save.ok) throw new Error(`No se pudo guardar (${save.status})`);
+    f.reset();status.textContent="¡Recibido! Aparecerá en el muro cuando sea aprobado.";status.classList.add("ok");
+  }catch(err){
+    console.error(err);status.textContent="No se ha podido enviar. Comprueba la conexión e inténtalo de nuevo.";status.classList.add("error");
+  }finally{button.disabled=false;button.textContent="Enviar para aprobación";}
 });
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
-  b.classList.add("on"); document.getElementById(b.dataset.tab).classList.add("on");
+  b.classList.add("on");document.getElementById(b.dataset.tab).classList.add("on");
 });
-load();
-setInterval(load, 20000);
+load();setInterval(load,20000);
 </script>
 </body>
 </html>

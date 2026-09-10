@@ -9,13 +9,15 @@ if not isinstance(data, list):
 for i,p in enumerate(data if isinstance(data,list) else []):
     if not isinstance(p, dict):
         errs.append(f"[{i}] no es objeto"); continue
-    extra=set(p)-{"archivo","nombre","tipo","texto","para"}
+    extra=set(p)-{"id","archivo","nombre","tipo","texto","para"}
     if extra: errs.append(f"[{i}] campos extra: {extra}")
     nombre=str(p.get("nombre") or "")
+    item_id=str(p.get("id") or "")
     tipo=p.get("tipo")
     texto=str(p.get("texto") or "")
     archivo=str(p.get("archivo") or "")
     para=str(p.get("para") or "")
+    if not re.match(r"^github-issue-[1-9][0-9]*$", item_id): errs.append(f"[{i}] id inválido")
     if not nombre or len(nombre)>80: errs.append(f"[{i}] nombre inválido")
     if tipo not in ("image","video","texto"): errs.append(f"[{i}] tipo inválido")
     if len(texto)>2000: errs.append(f"[{i}] texto demasiado largo")

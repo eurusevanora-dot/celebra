@@ -41,11 +41,9 @@ input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #c
 textarea{min-height:110px}
 .btn{margin-top:1rem;background:var(--ink);color:#f7efe2;border:0;padding:.85rem 1.1rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
 .btn[disabled]{opacity:.5}
-.empty,.hint,.ok{text-align:center;color:#6b5c4c}
-.ok{color:#2a6b3a;display:none;margin-top:.8rem}
+.empty,.hint,.privacy{text-align:center;color:#6b5c4c}
+.privacy{font-size:.92rem;line-height:1.4}
 .foot{text-align:center;margin-top:2.5rem;font-size:.8rem;letter-spacing:.2em;color:#8a7a68}
-.del{position:absolute;top:8px;right:8px;display:none;background:#2a2118;color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer}
-body.admin .del{display:block}
 @media(max-width:700px){.wall{columns:2 11rem}.card:nth-child(n){transform:none}}
 </style>
 </head>
@@ -72,82 +70,72 @@ body.admin .del{display:block}
 <section id="dejar">
   <div class="form">
     <h2>Para el muro público</h2>
-    <form id="envio-form">
+    <form id="envio-form" method="post">
       <label>Tu nombre</label><input name="nombre" required maxlength="80">
       <label>Se lo dedicas a</label>
       <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
       <label>Felicitación</label><textarea name="mensaje" required maxlength="2000"></textarea>
       <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/*,video/*">
-      <button class="btn" type="submit">Publicar en el muro</button>
-      <p class="ok" id="ok">Enviado. En unos minutos está en el muro de todos. Recarga si no lo ves.</p>
+      <button class="btn" type="submit">Enviar para aprobación</button>
+      <p class="privacy">Se abrirá GitHub para enviar la felicitación. Allí podrás adjuntar la foto o el vídeo. Nada aparece en el muro hasta que Pepe lo apruebe.</p>
     </form>
   </div>
 </section>
-<p class="foot" id="lock">MIRYAM · 25</p>
+<p class="foot">MIRYAM · 25</p>
 </div>
-<script>
-const API = "https://api.telegram.org/bot8896535636:AAFgj6XD_r91t_pI2_0TyGBHRpCNkMclFLQ";
-const CHAT = "1891984663";
-const PIN = "miryam25";
+<script type="module">
+import {isMuro, mediaSrc} from "./scripts/muro-guards.js";
+const ISSUE_URL = "https://github.com/eurusevanora-dot/celebra/issues/new";
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function cardHTML(p){
-  const src = p.archivo ? "muro-media/" + p.archivo : "";
+  const src = mediaSrc(p);
   const media = p.tipo==="video"&&src?`<video src="${src}" controls></video>`:(src?`<img src="${src}" alt="">`:"");
   const note = src?"":" note";
   const txt = p.texto?`<div class="msg">${esc(p.texto)}</div>`:"";
-  return `<article class="card${note}"><button class="del" type="button">×</button><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
+  return `<article class="card${note}"><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
 }
 function draw(items){
   const feed=document.getElementById("feed"), empty=document.getElementById("empty");
   if(!items.length){empty.hidden=false;feed.innerHTML="";return;}
   empty.hidden=true;
   feed.innerHTML=items.map(cardHTML).join("");
-  feed.querySelectorAll(".del").forEach((b,i)=>b.onclick=()=>{
-    if(!confirm("¿Quitar del muro público?"))return;
-    const p=items[i];
-    fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:"BORRAR "+(p.archivo||p.nombre||"")})});
-  });
 }
-function load(){
-  fetch("muro.json?t="+Date.now()).then(r=>r.ok?r.json():[]).catch(()=>[]).then(pub=>draw(pub||[]));
-}
-async function sendTG(caption, file){
-  if(file){
-    const isVid=(file.type||"").startsWith("video");
-    const fd=new FormData();
-    fd.append("chat_id",CHAT);
-    fd.append("caption",caption);
-    fd.append(isVid?"video":"photo",file);
-    await fetch(API+(isVid?"/sendVideo":"/sendPhoto"),{method:"POST",body:fd});
-  } else {
-    await fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:caption})});
+async function load(){
+  try{
+    const r=await fetch("muro.json?t="+Date.now(),{cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const pub=await r.json();
+    if(!isMuro(pub)) throw new Error("muro.json inválido");
+    draw(pub);
+  }catch(err){
+    console.error(err);
+    draw([]);
   }
 }
 document.getElementById("envio-form").addEventListener("submit", async e=>{
   e.preventDefault();
-  const f=e.target, btn=f.querySelector(".btn");
-  btn.disabled=true;
+  const f=e.target;
   const nombre=f.nombre.value.trim(), para=f.para.value, texto=f.mensaje.value.trim();
   const media=f.media&&f.media.files&&f.media.files[0];
-  const caption="PUBLICAR\nNOMBRE: "+nombre+"\nPARA: "+para+"\nTEXTO: "+texto;
-  try{
-    await sendTG(caption, media);
-    document.getElementById("ok").style.display="block";
-    f.reset();
-    document.querySelector('[data-tab="muro"]').click();
-    setTimeout(load, 4000);
-  }catch(err){
-    alert("No se pudo enviar. Prueba otra vez.");
+  if(!nombre||!texto){f.reportValidity();return;}
+  const body=[
+    "### Tu nombre",nombre,"",
+    "### Se lo dedicas a",para,"",
+    "### Felicitación",texto,"",
+    "### Foto o vídeo (opcional)",
+    media ? `Adjunta aquí de nuevo el archivo: ${media.name}` : "Sin archivo",
+    "","<!-- solicitud-muro-miryam25 -->"
+  ].join("\n");
+  const q=new URLSearchParams({title:`Recuerdo para ${para} — ${nombre}`,body,labels:"pendiente"});
+  if(media){
+    alert("Por seguridad la web no envía archivos directamente. En GitHub, arrastra o selecciona la foto/vídeo antes de crear la solicitud.");
   }
-  btn.disabled=false;
+  location.assign(ISSUE_URL+"?"+q.toString());
 });
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
   b.classList.add("on"); document.getElementById(b.dataset.tab).classList.add("on");
 });
-let taps=0;
-document.getElementById("lock").onclick=()=>{taps++; if(taps<5)return; taps=0; if(prompt("Clave")===PIN) document.body.classList.add("admin");};
-if(location.hash==="#editar") document.body.classList.add("admin");
 load();
 setInterval(load, 20000);
 </script>

@@ -6,8 +6,9 @@
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["nombre", "tipo"],
+    "required": ["id", "nombre", "tipo"],
     "properties": {
+      "id": { "type": "string", "pattern": "^github-issue-[1-9][0-9]*$" },
       "archivo": { "type": "string", "maxLength": 180, "pattern": "^$|^[^/\\\\]+\\.(jpg|jpeg|png|webp|gif|mp4|webm)$" },
       "nombre": { "type": "string", "minLength": 1, "maxLength": 80 },
       "tipo": { "type": "string", "enum": ["image", "video", "texto"] },

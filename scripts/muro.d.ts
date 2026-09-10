@@ -1,6 +1,7 @@
 export type MuroTipo = "image" | "video" | "texto";
 
 interface MuroBase {
+  id: `github-issue-${number}`;
   nombre: string;
   para?: string;
 }

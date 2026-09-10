@@ -36,7 +36,7 @@ textarea{min-height:110px}
 .btn{margin-top:1rem;background:#111;color:#fff;border:0;padding:.8rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
 .empty{text-align:center;color:#666}
 .who{margin:.5rem .2rem 0}
-iframe.hid{position:absolute;width:0;height:0;border:0;visibility:hidden}
+iframe.hid{position:fixed;left:-9999px;width:1px;height:1px;border:0}
 </style>
 </head>
 <body>
@@ -68,9 +68,14 @@ iframe.hid{position:absolute;width:0;height:0;border:0;visibility:hidden}
 <script>
 const API = "https://api.telegram.org/bot8896535636:AAFgj6XD_r91t_pI2_0TyGBHRpCNkMclFLQ";
 const CHAT = "1891984663";
+function hidden(form, name, value) {
+  let i = form.querySelector('input[name="' + name + '"]');
+  if (!i) { i = document.createElement("input"); i.type = "hidden"; i.name = name; form.appendChild(i); }
+  i.value = value;
+}
 document.querySelectorAll(".form").forEach(box => {
-  const fileField = box.dataset.file ? `<label>Foto o vídeo</label><input name="archivo" type="file" accept="image/*,video/*">` : "";
-  box.innerHTML = `<form>
+  const fileField = box.dataset.file ? `<label>Foto o vídeo</label><input name="media" type="file" accept="image/*,video/*" capture="environment">` : "";
+  box.innerHTML = `<form method="post" target="envio" enctype="multipart/form-data">
     <label>Tu nombre</label><input name="nombre" required>
     <label>Para</label>
     <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
@@ -82,32 +87,23 @@ document.querySelectorAll(".form").forEach(box => {
     e.preventDefault();
     const f = e.target;
     const caption = "Felicidades Miryam\n" + box.dataset.tipo + " para " + f.para.value + "\nDe: " + f.nombre.value.trim() + "\n" + f.mensaje.value.trim();
-    const file = f.archivo && f.archivo.files && f.archivo.files[0];
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.target = "envio";
-    form.enctype = file ? "multipart/form-data" : "application/x-www-form-urlencoded";
-    const add = (n, v) => { const i = document.createElement("input"); i.type = "hidden"; i.name = n; i.value = v; form.appendChild(i); };
-    add("chat_id", CHAT);
-    if (file) {
-      const isVid = (file.type || "").startsWith("video");
-      form.action = API + (isVid ? "/sendVideo" : "/sendPhoto");
-      add("caption", caption);
-      const fi = document.createElement("input");
-      fi.type = "file";
-      fi.name = isVid ? "video" : "photo";
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      fi.files = dt.files;
-      form.appendChild(fi);
+    const media = f.media && f.media.files && f.media.files[0];
+    hidden(f, "chat_id", CHAT);
+    f.target = "envio";
+    f.method = "POST";
+    if (media) {
+      const isVid = (media.type || "").indexOf("video") === 0;
+      f.enctype = "multipart/form-data";
+      f.action = API + (isVid ? "/sendVideo" : "/sendPhoto");
+      f.media.name = isVid ? "video" : "photo";
+      hidden(f, "caption", caption);
     } else {
-      form.action = API + "/sendMessage";
-      add("text", caption);
+      f.enctype = "application/x-www-form-urlencoded";
+      f.action = API + "/sendMessage";
+      hidden(f, "text", caption);
     }
-    document.body.appendChild(form);
-    form.submit();
-    form.remove();
-    location.href = "gracias.html";
+    f.submit();
+    setTimeout(() => { location.href = "gracias.html"; }, 400);
   });
 });
 document.querySelectorAll("nav button").forEach(b => {

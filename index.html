@@ -30,6 +30,7 @@ textarea{min-height:110px}
 .btn{margin-top:1rem;background:#111;color:#fff;border:0;padding:.8rem 1.1rem;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
 .hint{text-align:center;color:#555;margin-top:.8rem}
 .empty{text-align:center;color:#666}
+.who{margin:.5rem .2rem 0}
 </style>
 </head>
 <body>
@@ -58,7 +59,7 @@ textarea{min-height:110px}
 <section id="libre"><div class="form" data-tipo="Espacio libre"></div></section>
 </div>
 <script>
-const WA = "34646436481";
+const BOT = "Nexusmetadatabot";
 document.querySelectorAll(".form").forEach(box => {
   box.innerHTML = `<form>
     <label>Tu nombre</label><input name="nombre" required>
@@ -66,13 +67,24 @@ document.querySelectorAll(".form").forEach(box => {
     <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
     <label>Texto</label><textarea name="mensaje" required></textarea>
     <button class="btn" type="submit">Enviar felicitación</button>
-    <p class="hint">Se abre WhatsApp con el texto. Ahí adjunta la foto o el vídeo.</p>
   </form>`;
   box.querySelector("form").addEventListener("submit", e => {
     e.preventDefault();
     const f = e.target;
-    const txt = encodeURIComponent("Felicidades Myrian\n" + box.dataset.tipo + " para " + f.para.value + "\nDe: " + f.nombre.value.trim() + "\n" + f.mensaje.value.trim() + "\n(Adjunta foto o vídeo aquí si quieres)");
-    location.href = "https://wa.me/" + WA + "?text=" + txt;
+    const txt = encodeURIComponent(
+      "Felicidades Miryam\n" +
+      box.dataset.tipo + " para " + f.para.value + "\n" +
+      "De: " + f.nombre.value.trim() + "\n" +
+      f.mensaje.value.trim()
+    );
+    const send = document.createElement("a");
+    send.href = "https://t.me/" + BOT + "?text=" + txt;
+    send.target = "_blank";
+    send.rel = "noopener";
+    send.style.display = "none";
+    document.body.appendChild(send);
+    send.click();
+    location.href = "gracias.html";
   });
 });
 document.querySelectorAll("nav button").forEach(b => {

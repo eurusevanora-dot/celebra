@@ -2,13 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MIRYAM · twenty five</title>
 <meta property="og:title" content="MIRYAM · twenty five">
-<meta property="og:description" content="19 · 09 · 2026 · Hay mucho que celebrar">
+<meta property="og:description" content="19 · 09 · 2026 · Muro público de felicitaciones">
 <meta property="og:url" content="https://eurusevanora-dot.github.io/celebra/">
-<meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#2a2118;--card:#fffdf8;--gold:#b0893e;--rose:#c46a6a}
 *{box-sizing:border-box}
@@ -41,19 +40,16 @@ label{display:block;margin:.7rem 0 .25rem}
 input,textarea,select{width:100%;font:inherit;padding:.55rem;border:1px solid #cbbda8;background:#fffdf8}
 textarea{min-height:110px}
 .btn{margin-top:1rem;background:var(--ink);color:#f7efe2;border:0;padding:.85rem 1.1rem;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-family:inherit;cursor:pointer;width:100%}
-.empty{text-align:center;color:#6b5c4c;font-size:1.15rem}
-iframe.hid{position:fixed;left:-9999px;width:1px;height:1px;border:0}
-.hint{text-align:center;color:#6b5c4c;margin:0 0 1rem}
-.del{position:absolute;top:8px;right:8px;display:none;background:#2a2118;color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;line-height:28px}
+.btn[disabled]{opacity:.5}
+.empty,.hint,.ok{text-align:center;color:#6b5c4c}
+.ok{color:#2a6b3a;display:none;margin-top:.8rem}
+.foot{text-align:center;margin-top:2.5rem;font-size:.8rem;letter-spacing:.2em;color:#8a7a68}
+.del{position:absolute;top:8px;right:8px;display:none;background:#2a2118;color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer}
 body.admin .del{display:block}
-.adminbar{display:none;text-align:center;margin:0 0 1rem}
-body.admin .adminbar{display:block}
-.foot{text-align:center;margin-top:2.5rem;font-size:.8rem;letter-spacing:.2em;color:#8a7a68;cursor:pointer}
 @media(max-width:700px){.wall{columns:2 11rem}.card:nth-child(n){transform:none}}
 </style>
 </head>
 <body>
-<iframe class="hid" name="envio" title=""></iframe>
 <div class="wrap">
 <header>
   <p class="name">MIRYAM</p>
@@ -63,27 +59,27 @@ body.admin .adminbar{display:block}
   <div class="rule"></div>
   <p class="date">19 · 09 · 2026</p>
 </header>
-<p class="intro">Gloria, Miryam, Joaquín, familia y amigos. Un solo muro público: lo que se publica lo ve todo el mundo.</p>
+<p class="intro">Un solo muro, público. Lo que dejes aquí lo ve todo el mundo.</p>
 <nav>
   <button class="on" data-tab="muro">Muro</button>
   <button data-tab="dejar">Dejar recuerdo</button>
 </nav>
 <section id="muro" class="on">
-  <p class="hint">Fotos y felicitaciones a la vista de todos</p>
-  <p class="adminbar">Modo borrar activo. Pulsa × en una tarjeta.</p>
+  <p class="hint">Felicitaciones, fotos y vídeos a la vista de todos</p>
   <div id="feed" class="wall"></div>
   <p id="empty" class="empty">Aún no hay recuerdos. Sé el primero.</p>
 </section>
 <section id="dejar">
   <div class="form">
-    <h2>Para el muro</h2>
+    <h2>Para el muro público</h2>
     <form id="envio-form">
-      <label>Tu nombre</label><input name="nombre" required>
+      <label>Tu nombre</label><input name="nombre" required maxlength="80">
       <label>Se lo dedicas a</label>
       <select name="para"><option>Miryam</option><option>Gloria</option><option>Joaquín</option><option>Toda la familia</option></select>
-      <label>Felicitación</label><textarea name="mensaje" required></textarea>
+      <label>Felicitación</label><textarea name="mensaje" required maxlength="2000"></textarea>
       <label>Foto o vídeo (opcional)</label><input name="media" type="file" accept="image/*,video/*">
-      <button class="btn" type="submit">Enviar al muro</button>
+      <button class="btn" type="submit">Publicar en el muro</button>
+      <p class="ok" id="ok">Enviado. En unos minutos está en el muro de todos. Recarga si no lo ves.</p>
     </form>
   </div>
 </section>
@@ -96,67 +92,64 @@ const PIN = "miryam25";
 function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function cardHTML(p){
   const src = p.archivo ? "muro-media/" + p.archivo : "";
-  const media = p.tipo === "video" && src ? `<video src="${src}" controls></video>` : (src ? `<img src="${src}" alt="">` : "");
-  const note = !src ? " note" : "";
-  const txt = p.texto ? `<div class="msg">${esc(p.texto)}</div>` : "";
-  const id = encodeURIComponent(p.archivo || "");
-  return `<article class="card${note}" data-id="${id}"><button class="del" type="button" aria-label="Borrar">×</button><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
+  const media = p.tipo==="video"&&src?`<video src="${src}" controls></video>`:(src?`<img src="${src}" alt="">`:"");
+  const note = src?"":" note";
+  const txt = p.texto?`<div class="msg">${esc(p.texto)}</div>`:"";
+  return `<article class="card${note}"><button class="del" type="button">×</button><span class="tape"></span>${media}${txt}<div class="meta"><span class="para">Para ${esc(p.para||"Miryam")}</span><span>De ${esc(p.nombre||"")}</span></div></article>`;
 }
 function draw(items){
-  const feed = document.getElementById("feed");
-  const empty = document.getElementById("empty");
-  window._items = items;
-  if (!items.length){ empty.hidden=false; feed.innerHTML=""; return; }
-  empty.hidden = true;
-  feed.innerHTML = items.map(cardHTML).join("");
-  feed.querySelectorAll(".del").forEach((b,i)=> b.onclick = ()=> borrar(items[i]));
+  const feed=document.getElementById("feed"), empty=document.getElementById("empty");
+  if(!items.length){empty.hidden=false;feed.innerHTML="";return;}
+  empty.hidden=true;
+  feed.innerHTML=items.map(cardHTML).join("");
+  feed.querySelectorAll(".del").forEach((b,i)=>b.onclick=()=>{
+    if(!confirm("¿Quitar del muro público?"))return;
+    const p=items[i];
+    fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:"BORRAR "+(p.archivo||p.nombre||"")})});
+  });
 }
 function load(){
-  fetch("muro.json?t="+Date.now()).then(r=>r.ok?r.json():[]).catch(()=>[]).then(pub=> draw(pub||[]));
+  fetch("muro.json?t="+Date.now()).then(r=>r.ok?r.json():[]).catch(()=>[]).then(pub=>draw(pub||[]));
 }
-function hidden(form,name,value){
-  let i=form.querySelector('input[name="'+name+'"]');
-  if(!i){i=document.createElement("input");i.type="hidden";i.name=name;form.appendChild(i);} i.value=value;
+async function sendTG(caption, file){
+  if(file){
+    const isVid=(file.type||"").startsWith("video");
+    const fd=new FormData();
+    fd.append("chat_id",CHAT);
+    fd.append("caption",caption);
+    fd.append(isVid?"video":"photo",file);
+    await fetch(API+(isVid?"/sendVideo":"/sendPhoto"),{method:"POST",body:fd});
+  } else {
+    await fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:caption})});
+  }
 }
-function tg(text){
-  fetch(API+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:CHAT,text:text})});
-}
-function borrar(p){
-  if(!confirm("¿Quitar esta publicación del muro?")) return;
-  if(p.archivo) tg("BORRAR "+p.archivo);
-  else tg("BORRAR TEXTO\nNOMBRE: "+(p.nombre||"")+"\nTEXTO: "+(p.texto||""));
-}
-document.getElementById("envio-form").addEventListener("submit", e=>{
+document.getElementById("envio-form").addEventListener("submit", async e=>{
   e.preventDefault();
-  const f=e.target;
+  const f=e.target, btn=f.querySelector(".btn");
+  btn.disabled=true;
   const nombre=f.nombre.value.trim(), para=f.para.value, texto=f.mensaje.value.trim();
   const media=f.media&&f.media.files&&f.media.files[0];
   const caption="PUBLICAR\nNOMBRE: "+nombre+"\nPARA: "+para+"\nTEXTO: "+texto;
-  hidden(f,"chat_id",CHAT); f.target="envio"; f.method="POST";
-  if(media){
-    const isVid=(media.type||"").indexOf("video")===0;
-    f.enctype="multipart/form-data"; f.action=API+(isVid?"/sendVideo":"/sendPhoto");
-    f.media.name=isVid?"video":"photo"; hidden(f,"caption",caption);
-  } else {
-    f.enctype="application/x-www-form-urlencoded"; f.action=API+"/sendMessage"; hidden(f,"text",caption);
+  try{
+    await sendTG(caption, media);
+    document.getElementById("ok").style.display="block";
+    f.reset();
+    document.querySelector('[data-tab="muro"]').click();
+    setTimeout(load, 4000);
+  }catch(err){
+    alert("No se pudo enviar. Prueba otra vez.");
   }
-  f.submit();
-  location.href = "gracias.html";
+  btn.disabled=false;
 });
-document.querySelectorAll("nav button").forEach(b=> b.onclick=()=>{
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));
   b.classList.add("on"); document.getElementById(b.dataset.tab).classList.add("on");
 });
 let taps=0;
-document.getElementById("lock").onclick=()=>{
-  taps++;
-  if(taps<5) return;
-  taps=0;
-  const p=prompt("Clave para borrar publicaciones");
-  if(p===PIN){ document.body.classList.add("admin"); sessionStorage.setItem("admin","1"); }
-};
-if(sessionStorage.getItem("admin")==="1" || location.hash==="#editar") document.body.classList.add("admin");
+document.getElementById("lock").onclick=()=>{taps++; if(taps<5)return; taps=0; if(prompt("Clave")===PIN) document.body.classList.add("admin");};
+if(location.hash==="#editar") document.body.classList.add("admin");
 load();
+setInterval(load, 20000);
 </script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eurusevanora-dot.github.io/celebra/scripts/muro.schema.json",
+  "title": "Muro MIRYAM 25",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["nombre", "tipo"],
+    "properties": {
+      "archivo": { "type": "string", "maxLength": 180, "pattern": "^$|^[^/\\\\]+\\.(jpg|jpeg|png|webp|gif|mp4|webm)$" },
+      "nombre": { "type": "string", "minLength": 1, "maxLength": 80 },
+      "tipo": { "type": "string", "enum": ["image", "video", "texto"] },
+      "texto": { "type": "string", "maxLength": 2000 },
+      "para": { "type": "string", "maxLength": 80 }
+    },
+    "allOf": [
+      {
+        "if": { "properties": { "tipo": { "const": "texto" } }, "required": ["tipo"] },
+        "then": { "required": ["texto"] }
+      },
+      {
+        "if": { "properties": { "tipo": { "enum": ["image", "video"] } }, "required": ["tipo"] },
+        "then": {
+          "required": ["archivo"],
+          "properties": { "archivo": { "type": "string", "minLength": 1 } }
+        }
+      }
+    ]
+  }
+}

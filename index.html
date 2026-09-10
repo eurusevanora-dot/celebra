@@ -74,7 +74,7 @@ function hidden(form, name, value) {
   i.value = value;
 }
 document.querySelectorAll(".form").forEach(box => {
-  const fileField = box.dataset.file ? `<label>Foto o vídeo</label><input name="media" type="file" accept="image/*,video/*" capture="environment">` : "";
+  const fileField = box.dataset.file ? `<label>Foto o vídeo</label><input name="media" type="file" accept="image/*,video/*">` : "";
   box.innerHTML = `<form method="post" target="envio" enctype="multipart/form-data">
     <label>Tu nombre</label><input name="nombre" required>
     <label>Para</label>
